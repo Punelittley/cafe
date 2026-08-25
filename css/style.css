@@ -473,9 +473,9 @@ button, input, select, textarea {
 }
 
 .about-story-title {
-  font-family: var(--font-heading);
+  font-family: 'Playfair Display', serif;
   font-size: clamp(2.4rem, 4vw, 3.4rem);
-  font-weight: 400;
+  font-weight: 700;
   color: var(--c-wine-900);
   line-height: 1.12;
   letter-spacing: 0.04em;
@@ -545,11 +545,12 @@ button, input, select, textarea {
   display: inline-flex;
   align-items: center;
   gap: 20px;
-  font-family: var(--font-heading);
+  font-family: 'Playfair Display', serif;
   font-size: 1.4rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--c-wine-900);
+  font-weight: 700;
 }
 
 .categories-section-heading::before,
@@ -666,9 +667,9 @@ button, input, select, textarea {
 }
 
 .section-main-title {
-  font-family: var(--font-heading);
+  font-family: 'Playfair Display', serif;
   font-size: clamp(2.2rem, 3.6vw, 3.2rem);
-  font-weight: 400;
+  font-weight: 700;
   color: var(--c-wine-900);
   margin-bottom: 10px;
   letter-spacing: 0.03em;
