@@ -448,10 +448,10 @@
                 <div class="contact-icon-bubble">
                   <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                 </div>
-                <span class="contact-category-pill">Адрес кафе</span>
+                <span class="contact-category-pill">Кафе «Счастье Саперави»</span>
               </div>
-              <h3 class="contact-card-title">Революции, 22</h3>
-              <p class="contact-card-desc">г. Пермь, Свердловский район. Удобный подъезд в центре города и просторная бесплатная парковка для гостей кафе.</p>
+              <h3 class="contact-card-title">ул. Революции, 22</h3>
+              <p class="contact-card-desc">г. Пермь, Свердловский район. Вход именно в наше уютное кафе. Пожалуйста, не перепутайте с другими заведениями на этой же улице!</p>
             </div>
             <a href="https://yandex.ru/maps/?rtext=~58.006421,56.262529" target="_blank" rel="noopener" class="btn-card-action">
               Построить маршрут
@@ -469,10 +469,10 @@
               </div>
               <a href="tel:+73422935538" class="contact-phone-bignum">293-55-38</a>
               <a href="tel:+79922212169" class="contact-phone-subnum">+7 (992) 221-21-69</a>
-              <p class="contact-card-desc">Ответим на любые вопросы, поможем забронировать стол или оформить самовывоз со скидкой 10%.</p>
+              <p class="contact-card-desc">Ответит администратор кафе: поможем забронировать столик или оформить самовывоз со скидкой 10%.</p>
             </div>
             <button class="btn-card-action" onclick="openBookingModal('Бронь столика')">
-              Забронировать столик
+              Связаться с администратором
             </button>
           </div>
 
@@ -504,29 +504,26 @@
             </a>
           </div>
 
-          <!-- Карточка 4: Мессенджеры и соцсети -->
+          <!-- Карточка 4: Социальные сети -->
           <div class="contact-luxury-card">
             <div class="contact-card-top">
               <div class="contact-card-icon-tag">
                 <div class="contact-icon-bubble">
-                  <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                 </div>
-                <span class="contact-category-pill">Мессенджеры и соцсети</span>
+                <span class="contact-category-pill">Сообщества кафе</span>
               </div>
               <div class="contact-social-buttons">
-                <a href="https://wa.me/79922212169" target="_blank" rel="noopener" class="social-action-tile wa">
-                  <span>Чат в WhatsApp</span>
+                <a href="https://vk.ru/saperaviperm" target="_blank" rel="noopener" class="social-action-tile vk" style="flex: 1;">
+                  <span>Сообщество VK</span>
                 </a>
-                <a href="https://vk.ru/saperaviperm" target="_blank" rel="noopener" class="social-action-tile vk">
-                  <span>Группа ВКонтакте</span>
-                </a>
-                <a href="https://www.instagram.com/saperavi.perm" target="_blank" rel="noopener" class="social-action-tile ig">
-                  <span>Instagram: @saperavi.perm</span>
+                <a href="https://www.instagram.com/saperavi.perm" target="_blank" rel="noopener" class="social-action-tile ig" style="flex: 1;">
+                  <span>Instagram @saperavi.perm</span>
                 </a>
               </div>
             </div>
-            <a href="https://wa.me/79922212169" target="_blank" rel="noopener" class="btn-card-action">
-              Быстрый ответ в WhatsApp
+            <a href="https://vk.ru/saperaviperm" target="_blank" rel="noopener" class="btn-card-action">
+              Перейти в группу ВКонтакте
             </a>
           </div>
         </div>
@@ -582,7 +579,7 @@
         <div>
           <h4 class="footer-col-head">Сервисы</h4>
           <ul class="footer-nav-list">
-            <li><a href="https://wa.me/79922212169" target="_blank" rel="noopener">Чат в WhatsApp</a></li>
+            <li><a href="#contacts">Наши контакты</a></li>
             <li><a href="tel:+73422935538">Самовывоз (-10%)</a></li>
             <li><a href="https://vk.ru/saperaviperm" target="_blank" rel="noopener">Сообщество VK</a></li>
           </ul>
@@ -611,8 +608,8 @@
       <a href="#menu" class="mobile-bar-link">
         <span>Меню</span>
       </a>
-      <a href="https://wa.me/79922212169" target="_blank" rel="noopener" class="mobile-bar-link" style="color: #25d366;">
-        <span>WhatsApp</span>
+      <a href="#contacts" class="mobile-bar-link" style="color: var(--c-gold-400);">
+        <span>Контакты</span>
       </a>
     </div>
   </div>
@@ -626,7 +623,7 @@
         <span class="contact-hub-tag">Связь и бронирование</span>
         <h3 class="modal-head-title" id="booking-modal-title">Кафе «Счастье Саперави»</h3>
         <p class="modal-head-sub" id="booking-modal-sub">
-          Позвоните нам или напишите в удобный мессенджер — быстро забронируем столик или примем заказ!
+          Позвоните нам или напишите администратору — быстро забронируем столик или ответим на вопросы!
         </p>
       </div>
 
@@ -647,7 +644,7 @@
             <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
           </div>
           <div class="modal-phone-text">
-            <span class="modal-phone-label">Прямой номер / Бронь</span>
+            <span class="modal-phone-label">Администратор / Бронь</span>
             <span class="modal-phone-num">+7 (992) 221-21-69</span>
           </div>
         </a>
@@ -655,11 +652,6 @@
 
       <!-- Мессенджеры и Соцсети -->
       <div class="modal-socials-grid">
-        <a href="https://wa.me/79922212169" target="_blank" rel="noopener" class="modal-social-btn wa">
-          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-          <span>WhatsApp чат</span>
-        </a>
-
         <a href="https://vk.ru/saperaviperm" target="_blank" rel="noopener" class="modal-social-btn vk">
           <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.56 2.95-1.28 4.92-2.13 5.9-2.54 2.81-1.17 3.39-1.37 3.77-1.38.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06-.01.18-.02.28z"/></svg>
           <span>Сообщество VK</span>
@@ -674,7 +666,7 @@
       <!-- Адрес и График -->
       <div class="modal-footer-info">
         <div class="modal-footer-item">
-          <strong>Адрес:</strong> г. Пермь, ул. Революции, 22
+          <strong>Адрес:</strong> Кафе «Счастье Саперави», г. Пермь, ул. Революции, 22
         </div>
         <div class="modal-footer-item">
           <strong>Время:</strong> Пн–Пт 10:00–00:00, Сб–Вс 12:00–00:00
