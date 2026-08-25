@@ -29,7 +29,7 @@
   --c-text-muted: #6b625d;
   --c-text-light: #f5eee4;
 
-  --font-heading: 'Forum', 'Cormorant Garamond', Georgia, serif;
+  --font-heading: 'Cormorant Garamond', 'Forum', Georgia, serif;
   --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-script: 'Caveat', 'Marck Script', cursive, serif;
 
@@ -1975,13 +1975,35 @@ button, input, select, textarea {
   }
 
   .site-navbar .container {
-    display: flex;
-    justify-content: space-between;
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
+    align-items: center;
+    justify-content: stretch;
+    height: 86px;
   }
 
   .nav-left-col {
-    display: block;
-    position: static;
+    grid-column: 1;
+    grid-row: 1;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .brand-center-wrapper {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav-right-actions {
+    grid-column: 3;
+    grid-row: 1;
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
   }
 
   .nav-phone-link {
@@ -2021,7 +2043,7 @@ button, input, select, textarea {
   }
 
   .mobile-menu-toggle {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     width: 40px;
@@ -2034,8 +2056,48 @@ button, input, select, textarea {
     line-height: 1;
   }
 
+  /* HTML structure has mobile-menu-toggle inside nav-right-actions. Let's force it to column 1 visually using absolute/grid, or let's just make toggleBtn relative */
+  /* Actually, to make it perfectly centered and keep toggleBtn inside container, we can let grid place elements. Since toggleBtn is inside nav-right-actions, we can move it inside HTML to container, or we can use absolute positioning on mobile for toggleBtn to keep it simple! */
+  /* Let's use absolute positioning on mobile for toggleBtn (left: 20px) and logo in center, booking button absolute right! That is 100% bulletproof and doesn't depend on DOM hierarchy! */
+  .site-navbar .container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 86px;
+  }
+
+  .mobile-menu-toggle {
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex !important;
+  }
+
+  .brand-center-wrapper {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+
   .brand-logo-img {
-    height: 56px;
+    height: 72px !important;
+  }
+
+  .nav-right-actions {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex !important;
+    gap: 0;
+  }
+
+  .nav-right-actions .btn-gold-fill {
+    padding: 9px 15px !important;
+    font-size: 0.8rem !important;
   }
 
   .hero-centerpiece-section {
