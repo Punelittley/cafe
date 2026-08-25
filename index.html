@@ -357,72 +357,74 @@
       </div>
     </section>
 
-    <!-- Gallery (БЕЗ УВЕЛИЧЕНИЯ при наведении) -->
+    <!-- Gallery & Events (Слайдер моментов) -->
     <section class="site-section" id="gallery">
       <div class="container">
         <div class="section-head-center">
-          <span class="section-eyebrow">Атмосфера</span>
-          <h2 class="section-main-title">Галерея моментов</h2>
+          <span class="section-eyebrow">Счастливые моменты</span>
+          <h2 class="section-main-title">Проведение мероприятий</h2>
           <p class="section-subtext">
-            Фотографии праздничных застолий, сервировки и интерьера кафе.
+            Свадьбы, банкеты, юбилеи, корпоративы и семейные торжества в грузинском кафе «Счастье Саперави».
           </p>
         </div>
 
-        <div class="gallery-editorial-grid">
-          <div class="gallery-tile col-span-2 row-span-2">
-            <img src="assets/images/gallery-feast.jpg" alt="Застолье в зале" class="gallery-tile-img" loading="lazy">
-            <div class="gallery-tile-hover">
-              <span class="gallery-tile-text">Праздничное застолье в зале «Саперави»</span>
+        <!-- Слайдер событий -->
+        <div class="events-slider-container">
+          <div class="events-slider-track" id="events-slider">
+            <div class="events-slide active">
+              <img src="assets/images/gallery-events-1.jpg" alt="Праздничные тосты">
+              <div class="events-slide-caption">Праздничные застолья и искреннее грузинское гостеприимство</div>
+            </div>
+            <div class="events-slide">
+              <img src="assets/images/gallery-events-2.jpg" alt="Праздничная сервировка">
+              <div class="events-slide-caption">Изысканная праздничная сервировка столов и атмосфера торжества</div>
+            </div>
+            <div class="events-slide">
+              <img src="assets/images/gallery-feast.jpg" alt="Застолье в зале">
+              <div class="events-slide-caption">Торжественный банкетный зал «Счастье Саперави»</div>
+            </div>
+            <div class="events-slide">
+              <img src="assets/images/gallery-company.jpg" alt="Гости за праздничным столом">
+              <div class="events-slide-caption">Уютная и дружеская атмосфера для вашей компании</div>
+            </div>
+            <div class="events-slide">
+              <img src="assets/images/gallery-welcome.png" alt="Зона Welcome">
+              <div class="events-slide-caption">Встреча гостей и фотозона для ярких воспоминаний</div>
+            </div>
+            <div class="events-slide">
+              <img src="assets/images/gallery-wedding-stairs.png" alt="Торжественный выход">
+              <div class="events-slide-caption">Просторный зал для проведения масштабных юбилеев и свадеб</div>
             </div>
           </div>
 
-          <div class="gallery-tile">
-            <img src="assets/images/gallery-welcome.png" alt="Зона Welcome" class="gallery-tile-img" loading="lazy">
-            <div class="gallery-tile-hover">
-              <span class="gallery-tile-text">Зона Welcome для гостей</span>
+          <!-- Стрелки навигации -->
+          <button class="slider-arrow prev" id="slider-prev-btn" aria-label="Назад">❮</button>
+          <button class="slider-arrow next" id="slider-next-btn" aria-label="Вперед">❯</button>
+
+          <!-- Точки-индикаторы -->
+          <div class="slider-dots" id="slider-dots-container"></div>
+        </div>
+
+        <!-- Описание возможностей проведения мероприятий под слайдером -->
+        <div class="events-capabilities-block">
+          <div class="events-capabilities-grid">
+            <div class="capability-item">
+              <h4>Банкетное меню</h4>
+              <p>Разработаем индивидуальное меню грузинской и кавказской кухни под ваш бюджет и предпочтения.</p>
+            </div>
+            <div class="capability-item">
+              <h4>Любые форматы</h4>
+              <p>Комфортно разместим гостей на юбилеи, свадьбы, семейные застолья и корпоративы.</p>
+            </div>
+            <div class="capability-item">
+              <h4>Внимание к деталям</h4>
+              <p>Поможем с сервировкой столов, праздничным оформлением зала и встречей гостей.</p>
             </div>
           </div>
-
-          <div class="gallery-tile">
-            <img src="assets/images/gallery-company.jpg" alt="Банкетная компания" class="gallery-tile-img" loading="lazy">
-            <div class="gallery-tile-hover">
-              <span class="gallery-tile-text">Гости за праздничным столом</span>
-            </div>
-          </div>
-
-          <div class="gallery-tile">
-            <img src="assets/images/gallery-wedding-cake.png" alt="Свадебный торт" class="gallery-tile-img" loading="lazy">
-            <div class="gallery-tile-hover">
-              <span class="gallery-tile-text">Свадебный вечер</span>
-            </div>
-          </div>
-
-          <div class="gallery-tile">
-            <img src="assets/images/gallery-champagne.jpg" alt="Бокалы с напитками" class="gallery-tile-img" loading="lazy">
-            <div class="gallery-tile-hover">
-              <span class="gallery-tile-text">Праздничные тосты</span>
-            </div>
-          </div>
-
-          <div class="gallery-tile col-span-2">
-            <img src="assets/images/gallery-wedding-stairs.png" alt="Торжественный выход" class="gallery-tile-img" loading="lazy">
-            <div class="gallery-tile-hover">
-              <span class="gallery-tile-text">Торжественный вечер</span>
-            </div>
-          </div>
-
-          <div class="gallery-tile">
-            <img src="assets/images/gallery-hug.jpg" alt="Цветы и поздравления" class="gallery-tile-img" loading="lazy">
-            <div class="gallery-tile-hover">
-              <span class="gallery-tile-text">Поздравления и цветы</span>
-            </div>
-          </div>
-
-          <div class="gallery-tile">
-            <img src="assets/images/gallery-rings.png" alt="Обмен кольцами" class="gallery-tile-img" loading="lazy">
-            <div class="gallery-tile-hover">
-              <span class="gallery-tile-text">Праздничные моменты</span>
-            </div>
+          <div class="events-cta-row">
+            <button class="btn btn-gold-fill" onclick="openBookingModal('Проведение банкета', 'Интересует проведение мероприятия: ')">
+              Обсудить детали с администратором
+            </button>
           </div>
         </div>
       </div>

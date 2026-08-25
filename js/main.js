@@ -167,6 +167,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initMenuRenderer();
   initBookingModal();
   initLightbox();
+  initEventSlider();
   initAdminModule();
   initSmoothScroll();
 
@@ -201,7 +202,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v5_real_photos';
+    const MENU_VERSION = 'v6_reset_images_fixed';
     const savedVersion = localStorage.getItem('saperavi_menu_version');
     const savedMenu = localStorage.getItem('saperavi_menu_data');
 
@@ -216,6 +217,12 @@ function loadLocalData() {
       AppState.menu = [...DEFAULT_MENU_DATA];
       localStorage.setItem('saperavi_menu_data', JSON.stringify(AppState.menu));
       localStorage.setItem('saperavi_menu_version', MENU_VERSION);
+      // Если есть конфиг облака, автоматически обновим и там при старте
+      setTimeout(() => {
+        if (AppState.cloudConfig && AppState.cloudConfig.enabled) {
+          saveToCloudRedis().then(() => console.log('Defaults synced to cloud after version bump'));
+        }
+      }, 2000);
     }
 
     const savedLunch = localStorage.getItem('saperavi_lunch_info');
@@ -804,4 +811,68 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+function initEventSlider() {
+  const slider = document.getElementById('events-slider');
+  const prevBtn = document.getElementById('slider-prev-btn');
+  const nextBtn = document.getElementById('slider-next-btn');
+  const dotsContainer = document.getElementById('slider-dots-container');
+  if (!slider) return;
+
+  const slides = slider.querySelectorAll('.events-slide');
+  if (slides.length === 0) return;
+
+  let currentIndex = 0;
+  let autoSlideTimer = null;
+
+  // Clear dots just in case
+  dotsContainer.innerHTML = '';
+
+  // Create indicator dots
+  slides.forEach((_, idx) => {
+    const dot = document.createElement('div');
+    dot.className = 'slider-dot' + (idx === 0 ? ' active' : '');
+    dot.addEventListener('click', () => showSlide(idx));
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = dotsContainer.querySelectorAll('.slider-dot');
+
+  function showSlide(index) {
+    resetAutoSlide();
+
+    slides[currentIndex].classList.remove('active');
+    dots[currentIndex].classList.remove('active');
+
+    currentIndex = (index + slides.length) % slides.length;
+
+    slides[currentIndex].classList.add('active');
+    dots[currentIndex].classList.add('active');
+
+    startAutoSlide();
+  }
+
+  function nextSlide() {
+    showSlide(currentIndex + 1);
+  }
+
+  function prevSlide() {
+    showSlide(currentIndex - 1);
+  }
+
+  function startAutoSlide() {
+    autoSlideTimer = setInterval(nextSlide, 5000); // Auto change every 5 seconds
+  }
+
+  function resetAutoSlide() {
+    if (autoSlideTimer) {
+      clearInterval(autoSlideTimer);
+    }
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+  startAutoSlide();
 }

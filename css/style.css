@@ -1169,57 +1169,172 @@ button, input, select, textarea {
   color: #ffffff;
 }
 
-/* ==========================================================================
-   Gallery (БЕЗ УВЕЛИЧЕНИЯ при наведении)
-   ========================================================================== */
-.gallery-editorial-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 240px;
-  gap: 14px;
-}
-
-.gallery-tile {
+/* Event Gallery Slider */
+.events-slider-container {
   position: relative;
-  border-radius: var(--radius-xs);
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 36px;
+  border-radius: 24px;
   overflow: hidden;
-  cursor: pointer;
-  background: var(--c-paper-200);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--c-paper-200);
 }
 
-.gallery-tile.col-span-2 {
-  grid-column: span 2;
+.events-slider-track {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  background: #000000;
 }
 
-.gallery-tile.row-span-2 {
-  grid-row: span 2;
+@media (max-width: 768px) {
+  .events-slider-track {
+    height: 340px;
+  }
 }
 
-.gallery-tile-img {
+.events-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+.events-slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.events-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.gallery-tile-hover {
+.events-slide-caption {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 50%, rgba(7, 1, 3, 0.85) 100%);
-  display: flex;
-  align-items: flex-end;
-  padding: 16px;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.gallery-tile:hover .gallery-tile-hover {
-  opacity: 1;
-}
-
-.gallery-tile-text {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(7, 1, 3, 0.85) 100%);
   color: #ffffff;
-  font-size: 0.86rem;
+  padding: 24px 30px 48px;
+  font-size: 1.05rem;
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+  text-align: center;
   font-weight: 500;
+}
+
+/* Arrows */
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(7, 1, 3, 0.45);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--trans);
+  z-index: 10;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.slider-arrow:hover {
+  background: var(--c-wine-800);
+  border-color: var(--c-gold-300);
+}
+
+.slider-arrow.prev {
+  left: 20px;
+}
+
+.slider-arrow.next {
+  right: 20px;
+}
+
+/* Dots */
+.slider-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: var(--trans);
+}
+
+.slider-dot.active {
+  background: var(--c-gold-400);
+  transform: scale(1.25);
+}
+
+/* Capabilities list under slider */
+.events-capabilities-block {
+  margin-top: 40px;
+}
+
+.events-capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+  .events-capabilities-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.capability-item {
+  background: #ffffff;
+  border: 1px solid var(--c-paper-200);
+  padding: 22px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-subtle);
+  text-align: center;
+}
+
+.capability-item h4 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--c-wine-900);
+  margin-bottom: 8px;
+}
+
+.capability-item p {
+  font-size: 0.86rem;
+  color: var(--c-text-muted);
+  line-height: 1.5;
+}
+
+.events-cta-row {
+  text-align: center;
+  margin-top: 24px;
 }
 
 /* ==========================================================================
