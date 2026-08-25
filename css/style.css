@@ -29,7 +29,7 @@
   --c-text-muted: #6b625d;
   --c-text-light: #f5eee4;
 
-  --font-heading: 'Playfair Display', 'Yeseva One', serif;
+  --font-heading: 'Cormorant Garamond', 'Forum', Georgia, serif;
   --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-script: 'Caveat', 'Marck Script', cursive, serif;
 
@@ -69,7 +69,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 500;
   color: var(--c-wine-900);
   line-height: 1.15;
   letter-spacing: 0.02em;
@@ -310,9 +310,9 @@ button, input, select, textarea {
 }
 
 .hero-headline-title {
-  font-family: var(--font-heading);
+  font-family: 'Playfair Display', serif;
   font-size: clamp(2.8rem, 5.8vw, 5.2rem);
-  font-weight: 400;
+  font-weight: 800;
   color: #ffffff;
   line-height: 1.05;
   max-width: 980px;
