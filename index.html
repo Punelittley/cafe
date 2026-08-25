@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Счастье Саперави — Кафе грузинской кухни в Перми</title>
+  <meta name="description" content="Кафе грузинской кухни «Счастье Саперави» в Перми на ул. Революции, 22. Настоящие грузинские застолья, хинкали, хачапури, доставка, бронирование.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+
+  <!-- Google Fonts: Forum (Headings) & Manrope (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Luxury Sticky Navbar (3-колоночный макет с логотипом по центру) -->
+  <header class="site-navbar" id="navbar">
+    <div class="container">
+      <!-- Левое меню навигации -->
+      <nav class="nav-left-col">
+        <ul class="nav-links-list" id="nav-menu">
+          <li><a href="#menu" class="nav-item-link">Меню</a></li>
+          <li><a href="#about" class="nav-item-link">О нас</a></li>
+          <li><a href="#lunches" class="nav-item-link">Ланчи и завтраки</a></li>
+          <li><a href="#promos" class="nav-item-link">Акции</a></li>
+          <li><a href="#gallery" class="nav-item-link">Галерея</a></li>
+          <li><a href="#contacts" class="nav-item-link">Контакты</a></li>
+        </ul>
+      </nav>
+
+      <!-- Центральный логотип -->
+      <a href="#hero" class="brand-center-wrapper" title="Счастье Саперави">
+        <img src="assets/images/logo.png" alt="Счастье Саперави" class="brand-logo-img">
+      </a>
+
+      <!-- Правая колонка с телефоном и кнопками -->
+      <div class="nav-right-actions">
+        <a href="tel:+73422935538" class="nav-phone-link">
+          293-55-38
+        </a>
+        <button class="btn btn-gold-fill" onclick="openBookingModal('Бронь столика')">
+          Забронировать
+        </button>
+        <button class="mobile-menu-toggle" id="nav-toggle" aria-label="Навигация">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section (Фон phon.png + Огромное блюдо наполовину внизу) -->
+    <section class="hero-centerpiece-section" id="hero">
+      <div class="container hero-inner-container">
+        <h1 class="hero-headline-title">
+          Грузинское кафе <em>«Счастье Саперави»</em>
+        </h1>
+
+        <p class="hero-headline-sub">
+          Настоящие грузинские застолья, традиционные блюда на углях и уютная атмосфера в самом сердце Перми.
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="hero-bottom-actions">
+          <a href="#menu" class="btn btn-gold-fill">
+            Смотреть меню
+          </a>
+          <a href="#about" class="btn btn-gold-outline">
+            О нашем кафе
+          </a>
+          <a href="tel:+73422935538" class="btn btn-gold-outline">
+            293-55-38
+          </a>
+        </div>
+      </div>
+
+      <!-- Огромная тарелка, наполовину уходящая под нижний край Hero -->
+      <div class="hero-dish-half-cut-wrap">
+        <div class="hero-dish-big-glow"></div>
+        <img src="assets/images/borsh.png" alt="Блюдо грузинской кухни" class="hero-dish-big-img">
+      </div>
+    </section>
+
+    <!-- NEW Block: О НАШЕМ КАФЕ (по референсу) -->
+    <section class="about-story-section" id="about">
+      <div class="container">
+        <div class="about-story-grid">
+          <!-- Левая колонка с текстом -->
+          <div>
+            <span class="about-label-tag">О нашем кафе</span>
+            <h2 class="about-story-title">Место, где еда становится историей</h2>
+            <p class="about-story-desc">
+              «Саперави» — это больше, чем кафе. Это место, где оживают традиции солнечной Грузии: ароматы свежей выпечки из печи, сочные хинкали ручной лепки, вкус настоящего хачапури и искренние тосты за дружбу и долгую жизнь.
+            </p>
+            <span class="about-script-phrase">Гамарджоба, генацвале!</span>
+            <div>
+              <a href="#menu" class="btn btn-about-action">
+                Узнать больше о нас
+              </a>
+            </div>
+          </div>
+
+          <!-- Правая колонка: Векторная композиция Group 9.svg -->
+          <div class="about-single-photo-wrap">
+            <img src="assets/images/Group 9.svg" alt="О нашем кафе Счастье Саперави" class="about-single-img" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Menu Section с категориями-иконками (по референсу) -->
+    <section class="site-section" id="menu">
+      <div class="container">
+        <!-- Заголовок «ПОПУЛЯРНЫЕ КАТЕГОРИИ» -->
+        <div class="categories-header-strip">
+          <div class="categories-section-heading">Популярные категории</div>
+        </div>
+
+        <!-- Навигация по категориям с линейными иконками -->
+        <div class="categories-icon-nav">
+          <!-- Все позиции -->
+          <button class="cat-icon-tab-btn active" data-category="all" onclick="setMenuCategory('all', this)">
+            <div class="cat-icon-svg-box">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+            </div>
+            <span class="cat-icon-label">Все меню</span>
+          </button>
+
+          <!-- Салаты и Закуски -->
+          <button class="cat-icon-tab-btn" data-category="salads" onclick="setMenuCategory('salads', this)">
+            <div class="cat-icon-svg-box">
+              <svg viewBox="0 0 24 24"><path d="M4 11a8 8 0 0 0 16 0H4z"/><path d="M7 8c1.5-2 3.5-3 5-3s3.5 1 5 3"/><circle cx="9" cy="8" r="1.5"/><circle cx="15" cy="8" r="1.5"/><path d="M12 4v2"/></svg>
+            </div>
+            <span class="cat-icon-label">Холодные закуски</span>
+          </button>
+
+          <!-- Хинкали и Хачапури -->
+          <button class="cat-icon-tab-btn" data-category="khinkali" onclick="setMenuCategory('khinkali', this)">
+            <div class="cat-icon-svg-box">
+              <svg viewBox="0 0 24 24"><path d="M5 16c2-8 12-8 14 0"/><path d="M12 4v4"/><path d="M10 4h4"/><circle cx="12" cy="12" r="2.5"/><path d="M4 17a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3"/></svg>
+            </div>
+            <span class="cat-icon-label">Хачапури и хинкали</span>
+          </button>
+
+          <!-- Супы -->
+          <button class="cat-icon-tab-btn" data-category="soups" onclick="setMenuCategory('soups', this)">
+            <div class="cat-icon-svg-box">
+              <svg viewBox="0 0 24 24"><path d="M4 10a8 8 0 0 0 16 0H4z"/><path d="M12 3c-1 1-1 2 0 3s1 2 0 3"/><path d="M8 4c-1 1-1 2 0 3"/><path d="M16 4c-1 1-1 2 0 3"/><path d="M2 19h20"/></svg>
+            </div>
+            <span class="cat-icon-label">Супы</span>
+          </button>
+
+          <!-- Горячие блюда и Гриль -->
+          <button class="cat-icon-tab-btn" data-category="hot" onclick="setMenuCategory('hot', this)">
+            <div class="cat-icon-svg-box">
+              <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/><path d="M6 18h12"/><circle cx="12" cy="7" r="3"/><path d="M3 21h18"/></svg>
+            </div>
+            <span class="cat-icon-label">Горячие блюда</span>
+          </button>
+        </div>
+
+        <!-- Поисковая строка -->
+        <div class="menu-search-bar-wrap">
+          <div class="search-field-wrap">
+            <span class="search-icon-symbol">⌕</span>
+            <input type="text" id="menu-search-input" class="menu-search-input" placeholder="Поиск по названию или ингредиентам...">
+          </div>
+        </div>
+
+        <!-- Сетка карточек меню -->
+        <div class="menu-cards-grid" id="menu-items-grid">
+          <!-- Карточки наполняются через JS -->
+        </div>
+
+        <!-- Аккуратный блок Заказа и Самовывоза -->
+        <div class="delivery-ribbon-bar">
+          <div class="delivery-text-wrap">
+            <h3>Заказ и самовывоз</h3>
+            <p>Заказывайте любимые блюда по телефону или забирайте заказ на ул. Революции, 22 со скидкой 10%.</p>
+          </div>
+          <div class="delivery-buttons-group">
+            <button class="btn btn-wine" onclick="openBookingModal('Оформление заказа')">
+              Связаться с кафе
+            </button>
+            <a href="tel:+73422935538" class="btn btn-gold-outline">
+              Самовывоз (-10%): 293-55-38
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lunches & Breakfasts (Дневное предложение) -->
+    <section class="site-section" id="lunches">
+      <div class="container">
+        <div class="section-head-center">
+          <span class="section-eyebrow">Дневное предложение</span>
+          <h2 class="section-main-title">Бизнес-ланчи и Завтраки</h2>
+          <p class="section-subtext">
+            Полноценные грузинские обеды по будням и утренние сытные завтраки в центре города.
+          </p>
+        </div>
+
+        <div class="two-cards-row">
+          <!-- Бизнес-ланчи -->
+          <div class="meal-set-card">
+            <div class="meal-photo-wrap">
+              <img src="assets/images/promo-lunch.png" alt="Бизнес-ланчи" class="meal-photo">
+              <div class="meal-tag-ribbon">-15% в будни с 12:00 до 16:00</div>
+            </div>
+            <div class="meal-body-content">
+              <span class="meal-time-hint">Понедельник — Пятница • 12:00 – 16:00</span>
+              <h3 class="meal-title-text">Бизнес-ланчи недели</h3>
+              <p style="font-size: 0.84rem; color: var(--c-text-muted);">
+                Еженедельно обновляемые сытные сеты или скидка 15% на всё основное меню по будням.
+              </p>
+
+              <ul class="meal-items-menu">
+                <li class="meal-menu-row">
+                  <span class="meal-item-name">Грузинский салат со свежими томатами и зеленью</span>
+                  <span class="meal-item-gram">150 г</span>
+                </li>
+                <li class="meal-menu-row">
+                  <span class="meal-item-name">Суп Харчо из телятины / Куриный суп с лапшой</span>
+                  <span class="meal-item-gram">250 мл</span>
+                </li>
+                <li class="meal-menu-row">
+                  <span class="meal-item-name">Люля-кебаб из цыпленка с соусом сацебели</span>
+                  <span class="meal-item-gram">120/100 г</span>
+                </li>
+                <li class="meal-menu-row">
+                  <span class="meal-item-name">Мини-хачапури по-имеретински / Свежий лаваш</span>
+                  <span class="meal-item-gram">120 г</span>
+                </li>
+                <li class="meal-menu-row">
+                  <span class="meal-item-name">Горный чай с чабрецом / Домашний морс</span>
+                  <span class="meal-item-gram">200 мл</span>
+                </li>
+              </ul>
+
+              <button class="btn btn-wine" onclick="openBookingModal('Столик на ланч', 'Бронь столика на бизнес-ланч')">
+                Забронировать столик на обед
+              </button>
+            </div>
+          </div>
+
+          <!-- Завтраки -->
+          <div class="meal-set-card">
+            <div class="meal-photo-wrap">
+              <img src="assets/images/adyghe-cheese.jpg" alt="Завтраки" class="meal-photo">
+              <div class="meal-tag-ribbon">С 10:00 в будни • С 12:00 в выходные</div>
+            </div>
+            <div class="meal-body-content">
+              <span class="meal-time-hint">Утреннее меню</span>
+              <h3 class="meal-title-text">Грузинские Завтраки</h3>
+              <p style="font-size: 0.84rem; color: var(--c-text-muted);">
+                Свежая выпечка из печи, сырные блюда, свежесваренный кофе и горный чай.
+              </p>
+
+              <ul class="meal-items-menu">
+                <li class="meal-menu-row">
+                  <span class="meal-item-name">Хачапури по-аджарски с сыром и желтком</span>
+                  <span class="meal-item-gram">Горячая подача</span>
+                </li>
+                <li class="meal-menu-row">
+                  <span class="meal-item-name">Жареный адыгейский сыр с вялеными томатами</span>
+                  <span class="meal-item-gram">430 ₽</span>
+                </li>
+                <li class="meal-menu-row">
+                  <span class="meal-item-name">Шакшука по-кавказски со свежей зеленью</span>
+                  <span class="meal-item-gram">Свежая выпечка</span>
+                </li>
+                <li class="meal-menu-row">
+                  <span class="meal-item-name">Домашние сырники со сметаной и вареньем</span>
+                  <span class="meal-item-gram">220 г</span>
+                </li>
+                <li class="meal-menu-row">
+                  <span class="meal-item-name">Кофе и горный чай с кавказскими травами</span>
+                  <span class="meal-item-gram">Напитки</span>
+                </li>
+              </ul>
+
+              <button class="btn btn-wine" onclick="openBookingModal('Столик на завтрак', 'Бронь столика на завтрак')">
+                Прийти на завтрак
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Promotions (Акции и скидки: чистые графические баннеры без дублирования текста) -->
+    <section class="site-section" id="promos" style="background: var(--c-paper-100);">
+      <div class="container">
+        <div class="section-head-center">
+          <span class="section-eyebrow">Специальные условия</span>
+          <h2 class="section-main-title">Акции и скидки</h2>
+          <p class="section-subtext">
+            Постоянные скидки и привилегии для гостей кафе «Счастье Саперави».
+          </p>
+        </div>
+
+        <div class="promos-banners-grid">
+          <!-- Баннер 1: День Рождения -->
+          <div class="promo-banner-card">
+            <img src="assets/images/promo-birthday.png" alt="Скидка 10% в День Рождения" class="promo-banner-img" loading="lazy">
+            <div class="promo-banner-action-bar">
+              <span class="promo-action-note">7 дней до и 7 дней после даты</span>
+              <button class="promo-action-btn" onclick="openBookingModal('День Рождения', 'Бронь столика на День Рождения (-10%)')">
+                Забронировать стол
+              </button>
+            </div>
+          </div>
+
+          <!-- Баннер 2: Самовывоз -->
+          <div class="promo-banner-card">
+            <img src="assets/images/promo-takeaway.png" alt="Скидка 10% на самовывоз" class="promo-banner-img" loading="lazy">
+            <div class="promo-banner-action-bar">
+              <span class="promo-action-note">ул. Революции, 22</span>
+              <a href="tel:+73422935538" class="promo-action-btn">
+                Заказать: 293-55-38
+              </a>
+            </div>
+          </div>
+
+          <!-- Баннер 3: Винный четверг -->
+          <div class="promo-banner-card">
+            <img src="assets/images/promo-wine.png" alt="Скидка 20% в Винный четверг" class="promo-banner-img" loading="lazy">
+            <div class="promo-banner-action-bar">
+              <span class="promo-action-note">Каждый четверг</span>
+              <button class="promo-action-btn" onclick="openBookingModal('Винный четверг', 'Бронь столика на Винный четверг (-20%)')">
+                Забронировать стол
+              </button>
+            </div>
+          </div>
+
+          <!-- Баннер 4: Скидка на банкет в будни -->
+          <div class="promo-banner-card">
+            <img src="assets/images/promo-discounts.png" alt="Скидка на банкет 20 000 рублей" class="promo-banner-img" loading="lazy">
+            <div class="promo-banner-action-bar">
+              <span class="promo-action-note">С воскресенья по четверг</span>
+              <button class="promo-action-btn" onclick="openBookingModal('Банкет в будни', 'Бронь зала на банкет (скидка 20 000 ₽)')">
+                Узнать детали
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery (БЕЗ УВЕЛИЧЕНИЯ при наведении) -->
+    <section class="site-section" id="gallery">
+      <div class="container">
+        <div class="section-head-center">
+          <span class="section-eyebrow">Атмосфера</span>
+          <h2 class="section-main-title">Галерея моментов</h2>
+          <p class="section-subtext">
+            Фотографии праздничных застолий, сервировки и интерьера кафе.
+          </p>
+        </div>
+
+        <div class="gallery-editorial-grid">
+          <div class="gallery-tile col-span-2 row-span-2">
+            <img src="assets/images/gallery-feast.jpg" alt="Застолье в зале" class="gallery-tile-img" loading="lazy">
+            <div class="gallery-tile-hover">
+              <span class="gallery-tile-text">Праздничное застолье в зале «Саперави»</span>
+            </div>
+          </div>
+
+          <div class="gallery-tile">
+            <img src="assets/images/gallery-welcome.png" alt="Зона Welcome" class="gallery-tile-img" loading="lazy">
+            <div class="gallery-tile-hover">
+              <span class="gallery-tile-text">Зона Welcome для гостей</span>
+            </div>
+          </div>
+
+          <div class="gallery-tile">
+            <img src="assets/images/gallery-company.jpg" alt="Банкетная компания" class="gallery-tile-img" loading="lazy">
+            <div class="gallery-tile-hover">
+              <span class="gallery-tile-text">Гости за праздничным столом</span>
+            </div>
+          </div>
+
+          <div class="gallery-tile">
+            <img src="assets/images/gallery-wedding-cake.png" alt="Свадебный торт" class="gallery-tile-img" loading="lazy">
+            <div class="gallery-tile-hover">
+              <span class="gallery-tile-text">Свадебный вечер</span>
+            </div>
+          </div>
+
+          <div class="gallery-tile">
+            <img src="assets/images/gallery-champagne.jpg" alt="Бокалы с напитками" class="gallery-tile-img" loading="lazy">
+            <div class="gallery-tile-hover">
+              <span class="gallery-tile-text">Праздничные тосты</span>
+            </div>
+          </div>
+
+          <div class="gallery-tile col-span-2">
+            <img src="assets/images/gallery-wedding-stairs.png" alt="Торжественный выход" class="gallery-tile-img" loading="lazy">
+            <div class="gallery-tile-hover">
+              <span class="gallery-tile-text">Торжественный вечер</span>
+            </div>
+          </div>
+
+          <div class="gallery-tile">
+            <img src="assets/images/gallery-hug.jpg" alt="Цветы и поздравления" class="gallery-tile-img" loading="lazy">
+            <div class="gallery-tile-hover">
+              <span class="gallery-tile-text">Поздравления и цветы</span>
+            </div>
+          </div>
+
+          <div class="gallery-tile">
+            <img src="assets/images/gallery-rings.png" alt="Обмен кольцами" class="gallery-tile-img" loading="lazy">
+            <div class="gallery-tile-hover">
+              <span class="gallery-tile-text">Праздничные моменты</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacts & Full Width Map (Большой интерактивный блок локации и связи) -->
+    <section class="contacts-map-section" id="contacts">
+      <div class="container">
+        <div class="section-head-center">
+          <span class="section-eyebrow">Локация и визит</span>
+          <h2 class="section-main-title">Как с нами связаться</h2>
+          <p class="section-subtext">
+            Ждем вас в гости на душевные грузинские застолья каждый день в центре Перми.
+          </p>
+        </div>
+
+        <!-- 4 Большие интерактивные карточки -->
+        <div class="contacts-interactive-grid">
+          <!-- Карточка 1: Адрес -->
+          <div class="contact-luxury-card">
+            <div class="contact-card-top">
+              <div class="contact-card-icon-tag">
+                <div class="contact-icon-bubble">
+                  <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <span class="contact-category-pill">Адрес кафе</span>
+              </div>
+              <h3 class="contact-card-title">Революции, 22</h3>
+              <p class="contact-card-desc">г. Пермь, Свердловский район. Удобный подъезд в центре города и просторная бесплатная парковка для гостей кафе.</p>
+            </div>
+            <a href="https://yandex.ru/maps/?rtext=~58.006421,56.262529" target="_blank" rel="noopener" class="btn-card-action">
+              Построить маршрут
+            </a>
+          </div>
+
+          <!-- Карточка 2: Прямой телефон -->
+          <div class="contact-luxury-card">
+            <div class="contact-card-top">
+              <div class="contact-card-icon-tag">
+                <div class="contact-icon-bubble">
+                  <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                </div>
+                <span class="contact-category-pill">Бронь и заказы</span>
+              </div>
+              <a href="tel:+73422935538" class="contact-phone-bignum">293-55-38</a>
+              <a href="tel:+79922212169" class="contact-phone-subnum">+7 (992) 221-21-69</a>
+              <p class="contact-card-desc">Ответим на любые вопросы, поможем забронировать стол или оформить самовывоз со скидкой 10%.</p>
+            </div>
+            <button class="btn-card-action" onclick="openBookingModal('Бронь столика')">
+              Забронировать столик
+            </button>
+          </div>
+
+          <!-- Карточка 3: Режим работы -->
+          <div class="contact-luxury-card">
+            <div class="contact-card-top">
+              <div class="contact-card-icon-tag">
+                <div class="contact-icon-bubble">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <span class="contact-category-pill">Режим работы</span>
+              </div>
+              <ul class="contact-hours-list">
+                <li class="contact-hours-row">
+                  <span class="contact-hours-days">Пн — Пт</span>
+                  <span class="contact-hours-val">10:00 — 00:00</span>
+                </li>
+                <li class="contact-hours-row">
+                  <span class="contact-hours-days">Сб — Вс</span>
+                  <span class="contact-hours-val">12:00 — 00:00</span>
+                </li>
+              </ul>
+              <div id="contact-live-status" class="contact-status-live">
+                <span class="status-dot-pulse"></span> Открыто до 00:00
+              </div>
+            </div>
+            <a href="#menu" class="btn-card-action">
+              Выбрать блюда в меню
+            </a>
+          </div>
+
+          <!-- Карточка 4: Мессенджеры и соцсети -->
+          <div class="contact-luxury-card">
+            <div class="contact-card-top">
+              <div class="contact-card-icon-tag">
+                <div class="contact-icon-bubble">
+                  <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                </div>
+                <span class="contact-category-pill">Мессенджеры и соцсети</span>
+              </div>
+              <div class="contact-social-buttons">
+                <a href="https://wa.me/79922212169" target="_blank" rel="noopener" class="social-action-tile wa">
+                  <span>Чат в WhatsApp</span>
+                </a>
+                <a href="https://vk.ru/saperaviperm" target="_blank" rel="noopener" class="social-action-tile vk">
+                  <span>Группа ВКонтакте</span>
+                </a>
+                <a href="https://www.instagram.com/saperavi.perm" target="_blank" rel="noopener" class="social-action-tile ig">
+                  <span>Instagram: @saperavi.perm</span>
+                </a>
+              </div>
+            </div>
+            <a href="https://wa.me/79922212169" target="_blank" rel="noopener" class="btn-card-action">
+              Быстрый ответ в WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Карта от левого до правого края (100% width с точной меткой) -->
+      <div class="full-width-map-wrap">
+        <iframe 
+          src="https://yandex.ru/map-widget/v1/?text=%D0%A1%D1%87%D0%B0%D1%81%D1%82%D1%8C%D0%B5%20%D0%A1%D0%B0%D0%BF%D0%B5%D1%80%D0%B0%D0%B2%D0%B8%2C%20%D0%9F%D0%B5%D1%80%D0%BC%D1%8C%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A0%D0%B5%D0%B2%D0%BE%D0%BB%D1%8E%D1%86%D0%B8%D0%B8%2C%2022&z=17&ll=56.262529%2C58.006421&pt=56.262529,58.006421,pm2rdm" 
+          class="full-map-iframe" 
+          title="Кафе Счастье Саперави на карте Перми (ул. Революции, 22)" 
+          loading="lazy" 
+          allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-columns-grid">
+        <div>
+          <a href="#hero" class="footer-brand-wrap" title="Счастье Саперави">
+            <img src="assets/images/logo.png" alt="Счастье Саперави" class="footer-logo-img">
+          </a>
+          <p class="footer-brand-desc">
+            Грузинское кафе в Перми. Настоящие застолья, хинкали, хачапури и авторская кавказская кухня.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-head">Разделы</h4>
+          <ul class="footer-nav-list">
+            <li><a href="#menu">Основное меню</a></li>
+            <li><a href="#about">О нашем кафе</a></li>
+            <li><a href="#lunches">Ланчи и завтраки</a></li>
+            <li><a href="#promos">Специальные акции</a></li>
+            <li><a href="#gallery">Галерея интерьера</a></li>
+            <li><a href="#contacts">Контакты</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-head">Контакты</h4>
+          <ul class="footer-nav-list">
+            <li><a href="tel:+73422935538">293-55-38</a></li>
+            <li><a href="tel:+79922212169">+7 (992) 221-21-69</a></li>
+            <li><span>ул. Революции, 22</span></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-head">Сервисы</h4>
+          <ul class="footer-nav-list">
+            <li><a href="https://wa.me/79922212169" target="_blank" rel="noopener">Чат в WhatsApp</a></li>
+            <li><a href="tel:+73422935538">Самовывоз (-10%)</a></li>
+            <li><a href="https://vk.ru/saperaviperm" target="_blank" rel="noopener">Сообщество VK</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Нижняя плашка футера с копирайтом и ссылкой в админку -->
+      <div style="margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--c-paper-200); display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--c-text-muted); flex-wrap: wrap; gap: 10px;">
+        <span>© 2026 Грузинское кафе «Счастье Саперави», г. Пермь • ул. Революции, 22</span>
+        <a href="admin.html" target="_blank" style="color: var(--c-wine-800); font-weight: 600; text-decoration: none;">
+          Панель управления ⚙
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Sticky Bar -->
+  <div class="mobile-action-bar">
+    <div class="mobile-action-grid">
+      <a href="tel:+73422935538" class="mobile-bar-link">
+        <span>Позвонить</span>
+      </a>
+      <button class="mobile-bar-link cta-highlight" onclick="openBookingModal('Бронь стола')">
+        <span>Бронь</span>
+      </button>
+      <a href="#menu" class="mobile-bar-link">
+        <span>Меню</span>
+      </a>
+      <a href="https://wa.me/79922212169" target="_blank" rel="noopener" class="mobile-bar-link" style="color: #25d366;">
+        <span>WhatsApp</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Contact & Booking Modal (Связь, телефоны, ВК и соцсети) -->
+  <div class="modal-layer" id="booking-modal" role="dialog" aria-modal="true">
+    <div class="modal-window contact-hub-modal">
+      <button class="modal-close-trigger" id="booking-modal-close" aria-label="Закрыть">✕</button>
+      
+      <div class="contact-hub-header">
+        <span class="contact-hub-tag">Связь и бронирование</span>
+        <h3 class="modal-head-title" id="booking-modal-title">Кафе «Счастье Саперави»</h3>
+        <p class="modal-head-sub" id="booking-modal-sub">
+          Позвоните нам или напишите в удобный мессенджер — быстро забронируем столик или примем заказ!
+        </p>
+      </div>
+
+      <!-- Телефоны для прямого звонка -->
+      <div class="modal-phones-block">
+        <a href="tel:+73422935538" class="modal-phone-card">
+          <div class="modal-phone-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="modal-phone-text">
+            <span class="modal-phone-label">Городской телефон</span>
+            <span class="modal-phone-num">293-55-38</span>
+          </div>
+        </a>
+
+        <a href="tel:+79922212169" class="modal-phone-card">
+          <div class="modal-phone-icon">
+            <svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <div class="modal-phone-text">
+            <span class="modal-phone-label">Прямой номер / Бронь</span>
+            <span class="modal-phone-num">+7 (992) 221-21-69</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Мессенджеры и Соцсети -->
+      <div class="modal-socials-grid">
+        <a href="https://wa.me/79922212169" target="_blank" rel="noopener" class="modal-social-btn wa">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          <span>WhatsApp чат</span>
+        </a>
+
+        <a href="https://vk.ru/saperaviperm" target="_blank" rel="noopener" class="modal-social-btn vk">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.56 2.95-1.28 4.92-2.13 5.9-2.54 2.81-1.17 3.39-1.37 3.77-1.38.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06-.01.18-.02.28z"/></svg>
+          <span>Сообщество VK</span>
+        </a>
+
+        <a href="https://www.instagram.com/saperavi.perm" target="_blank" rel="noopener" class="modal-social-btn ig">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <span>Instagram @saperavi.perm</span>
+        </a>
+      </div>
+
+      <!-- Адрес и График -->
+      <div class="modal-footer-info">
+        <div class="modal-footer-item">
+          <strong>Адрес:</strong> г. Пермь, ул. Революции, 22
+        </div>
+        <div class="modal-footer-item">
+          <strong>Время:</strong> Пн–Пт 10:00–00:00, Сб–Вс 12:00–00:00
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="modal-layer" id="lightbox-modal" role="dialog" aria-modal="true">
+    <div class="modal-window lightbox-window">
+      <button class="modal-close-trigger" id="lightbox-close" style="background: rgba(255,255,255,0.2); color: #fff;">✕</button>
+      <img src="" alt="Фото" id="lightbox-img" class="lightbox-img-el">
+      <div id="lightbox-caption" class="lightbox-text-caption"></div>
+    </div>
+  </div>
+
+  <!-- Admin Modal -->
+  <div class="modal-layer" id="admin-modal" role="dialog" aria-modal="true">
+    <div class="modal-window admin-window-size">
+      <button class="modal-close-trigger" id="admin-modal-close">✕</button>
+      <h3 class="modal-head-title">Панель управления кафе «Счастье Саперави»</h3>
+      <p class="modal-head-sub">Редактирование меню, цен, ссылок на медиафайлы и облачная синхронизация.</p>
+
+      <div id="admin-content-area"></div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript File -->
+  <script src="js/main.js"></script>
+</body>
+</html>
