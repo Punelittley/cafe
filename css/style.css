@@ -2060,6 +2060,10 @@ button, input, select, textarea {
 }
 
 @media (max-width: 1024px) {
+  .nav-phone-link {
+    font-weight: 500 !important;
+  }
+
   .hero-dish-half-cut-wrap {
     height: 300px;
   }
@@ -2122,6 +2126,7 @@ button, input, select, textarea {
 
   .nav-phone-link {
     display: none;
+    font-weight: 500 !important;
   }
 
   .nav-links-list {
