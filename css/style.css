@@ -473,7 +473,7 @@ button, input, select, textarea {
 }
 
 .about-story-title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: clamp(2.4rem, 4vw, 3.4rem);
   font-weight: 700;
   color: var(--c-wine-900);
@@ -545,7 +545,7 @@ button, input, select, textarea {
   display: inline-flex;
   align-items: center;
   gap: 20px;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: 1.4rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -667,7 +667,7 @@ button, input, select, textarea {
 }
 
 .section-main-title {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-heading);
   font-size: clamp(2.2rem, 3.6vw, 3.2rem);
   font-weight: 700;
   color: var(--c-wine-900);
