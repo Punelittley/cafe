@@ -226,7 +226,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v9_salmon_update';
+    const MENU_VERSION = 'v10_kharcho_update';
     const savedVersion = localStorage.getItem('saperavi_menu_version');
     const savedMenu = localStorage.getItem('saperavi_menu_data');
 
