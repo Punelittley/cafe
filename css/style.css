@@ -1021,7 +1021,7 @@ button, input, select, textarea {
 .two-cards-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
+  gap: 36px;
 }
 
 .meal-set-card {
@@ -1029,14 +1029,20 @@ button, input, select, textarea {
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--c-paper-200);
-  box-shadow: var(--shadow-subtle);
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.meal-set-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
 }
 
 .meal-photo-wrap {
   position: relative;
-  height: 220px;
+  height: 310px;
 }
 
 .meal-photo {
@@ -1047,39 +1053,54 @@ button, input, select, textarea {
 
 .meal-tag-ribbon {
   position: absolute;
-  bottom: 14px;
-  left: 14px;
-  background: rgba(7, 1, 3, 0.9);
+  bottom: 18px;
+  left: 18px;
+  background: rgba(7, 1, 3, 0.88);
   color: var(--c-gold-300);
-  padding: 5px 12px;
-  border-radius: var(--radius-xs);
-  font-size: 0.76rem;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 0.86rem;
   font-weight: 600;
-  border: 1px solid rgba(197, 159, 78, 0.3);
-  backdrop-filter: blur(8px);
+  border: 1px solid rgba(197, 159, 78, 0.35);
+  backdrop-filter: blur(10px);
 }
 
 .meal-body-content {
-  padding: 28px;
+  padding: 34px 32px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
 .meal-time-hint {
-  font-size: 0.74rem;
-  letter-spacing: 0.14em;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--c-gold-700);
-  font-weight: 600;
-  margin-bottom: 4px;
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
 .meal-title-text {
   font-family: var(--font-heading);
-  font-size: 1.6rem;
+  font-size: 1.85rem;
   color: var(--c-wine-900);
-  margin-bottom: 6px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.meal-body-content p {
+  font-size: 1.02rem !important;
+  color: var(--c-text-muted);
+  line-height: 1.65;
+  margin-bottom: 28px;
+}
+
+.meal-body-content .btn-wine {
+  margin-top: auto;
+  padding: 13px 28px;
+  font-size: 0.92rem;
+  letter-spacing: 0.03em;
 }
 
 .meal-items-menu {
