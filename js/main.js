@@ -226,7 +226,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v7_added_chicken_khachapuri';
+    const MENU_VERSION = 'v8_khinkali_photo_fixed';
     const savedVersion = localStorage.getItem('saperavi_menu_version');
     const savedMenu = localStorage.getItem('saperavi_menu_data');
 
