@@ -76,6 +76,7 @@ const DEFAULT_MENU_DATA = [
     category: 'hot',
     categoryName: 'Горячие блюда',
     price: 550,
+    pricePrefix: 'от',
     weight: '100 г / овощи 290 ₽',
     desc: 'Стейк атлантического лосося на гриле с лимоном, свежим укропом, сезонными овощами и белым соусом.',
     image: 'assets/images/salmon-steak.jpg',
@@ -88,6 +89,7 @@ const DEFAULT_MENU_DATA = [
     category: 'hot',
     categoryName: 'Горячие блюда',
     price: 400,
+    pricePrefix: 'от',
     weight: 'за 100 г',
     desc: 'Цельная радужная форель, запеченная на решетке с пряными травами, рукколой и домашним соусом мацони.',
     image: 'assets/images/trout-grill.jpg',
@@ -100,6 +102,7 @@ const DEFAULT_MENU_DATA = [
     category: 'hot',
     categoryName: 'Горячие блюда',
     price: 350,
+    pricePrefix: 'от',
     weight: 'за 100 г / картофель 250 ₽',
     desc: 'Ароматная свиная корейка на кости, приготовленная на гриле, подается с золотистым домашним жареным картофелем с луком и зеленью.',
     image: 'assets/images/pork-loin.jpg',
@@ -216,7 +219,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v21_slices_cheese';
+    const MENU_VERSION = 'v22_prices_from_prefix';
 
     const savedCloud = localStorage.getItem('saperavi_cloud_config');
     if (savedCloud) {
@@ -437,7 +440,7 @@ function initMenuRenderer() {
             </div>
 
             <div class="dish-card-foot">
-              <div class="dish-price-val">${dish.price} ₽</div>
+              <div class="dish-price-val">${dish.pricePrefix ? dish.pricePrefix + ' ' : ''}${dish.price} ₽</div>
               <button class="dish-quick-order-pill" onclick="openOrderForDish('${dish.id}')">
                 <span>Подробнее</span>
               </button>
