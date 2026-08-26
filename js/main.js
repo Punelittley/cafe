@@ -110,12 +110,12 @@ const DEFAULT_MENU_DATA = [
   // Супы
   {
     id: 'kharcho-veal',
-    title: 'Харчо из телятины',
+    title: 'Харчо',
     category: 'soups',
     categoryName: 'Супы',
     price: 590,
     weight: '350 мл',
-    desc: 'Густой суп из отборной телятины с рисом, грецкими орехами, ткемали, свежей кинзой и перчиком чили.',
+    desc: 'Наваристый суп с телятиной с добавлением томатов, риса, домашней аджики, пряных специй и трав. Подаём с рубленной зеленью.',
     image: 'assets/images/kharcho.jpg',
     badge: 'ТРАДИЦИЯ',
     badgeType: 'gold'
@@ -216,7 +216,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v17_remove_shashlik_borsh';
+    const MENU_VERSION = 'v18_kharcho_desc_update';
     const savedVersion = localStorage.getItem('saperavi_menu_version');
     const savedMenu = localStorage.getItem('saperavi_menu_data');
 
