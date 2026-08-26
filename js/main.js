@@ -130,7 +130,7 @@ const DEFAULT_MENU_DATA = [
     categoryName: 'Холодные закуски',
     price: 780,
     weight: '240 г',
-    desc: 'Слайсы слабосоленого лосося с миксом хрустящей зелени, томатами черри, персиком и сырным кремом.',
+    desc: 'Слайсы слабосоленого лосося с миксом хрустящей зелени, томатами черри, болгарским перцем и творожным сыром.',
     image: 'assets/images/salmon-salad.jpg',
     badge: 'ПРЕМИУМ',
     badgeType: 'hit'
@@ -216,7 +216,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v19_purge_shashlik_fixed';
+    const MENU_VERSION = 'v20_salmon_salad_ingredients';
 
     const savedCloud = localStorage.getItem('saperavi_cloud_config');
     if (savedCloud) {
