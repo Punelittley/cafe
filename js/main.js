@@ -216,14 +216,21 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v18_kharcho_desc_update';
+    const MENU_VERSION = 'v19_purge_shashlik_fixed';
+
+    const savedCloud = localStorage.getItem('saperavi_cloud_config');
+    if (savedCloud) {
+      AppState.cloudConfig = JSON.parse(savedCloud);
+    }
+
     const savedVersion = localStorage.getItem('saperavi_menu_version');
     const savedMenu = localStorage.getItem('saperavi_menu_data');
 
     if (savedMenu && savedVersion === MENU_VERSION) {
       const parsed = JSON.parse(savedMenu);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        AppState.menu = parsed;
+        // Ensure no legacy dishes leaked into local cache
+        AppState.menu = parsed.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad');
       } else {
         AppState.menu = [...DEFAULT_MENU_DATA];
       }
@@ -231,21 +238,16 @@ function loadLocalData() {
       AppState.menu = [...DEFAULT_MENU_DATA];
       localStorage.setItem('saperavi_menu_data', JSON.stringify(AppState.menu));
       localStorage.setItem('saperavi_menu_version', MENU_VERSION);
-      // Если есть конфиг облака, автоматически обновим и там при старте
+      // Immediately overwrite cloud database with clean defaults
       setTimeout(() => {
         if (AppState.cloudConfig && AppState.cloudConfig.enabled) {
           saveToCloudRedis().then(() => console.log('Defaults synced to cloud after version bump'));
         }
-      }, 2000);
+      }, 500);
     }
 
     const savedLunch = localStorage.getItem('saperavi_lunch_info');
     AppState.lunch = savedLunch ? JSON.parse(savedLunch) : { ...DEFAULT_LUNCH_INFO };
-
-    const savedCloud = localStorage.getItem('saperavi_cloud_config');
-    if (savedCloud) {
-      AppState.cloudConfig = JSON.parse(savedCloud);
-    }
   } catch (e) {
     console.error('Ошибка загрузки локальных данных:', e);
     AppState.menu = [...DEFAULT_MENU_DATA];
@@ -285,8 +287,15 @@ async function syncFromCloudRedis() {
       if (data && data.result) {
         const cloudMenu = typeof data.result === 'string' ? JSON.parse(data.result) : data.result;
         if (Array.isArray(cloudMenu) && cloudMenu.length > 0) {
-          AppState.menu = cloudMenu;
-          localStorage.setItem('saperavi_menu_data', JSON.stringify(cloudMenu));
+          const hasLegacy = cloudMenu.some(item => item.id === 'shashlik-pork' || item.id === 'borsh-trad');
+          if (hasLegacy) {
+            console.log('Purging legacy dishes from cloud Redis...');
+            AppState.menu = [...DEFAULT_MENU_DATA];
+            await saveToCloudRedis();
+          } else {
+            AppState.menu = cloudMenu;
+          }
+          localStorage.setItem('saperavi_menu_data', JSON.stringify(AppState.menu));
           if (window.refreshMenuGrid) window.refreshMenuGrid();
         }
       }
