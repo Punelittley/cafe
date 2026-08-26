@@ -2100,66 +2100,90 @@ button, input, select, textarea {
     padding-bottom: 60px;
   }
 
+  .site-navbar {
+    background: #ffffff;
+    height: 72px;
+  }
+
   .site-navbar .container {
-    display: grid !important;
-    grid-template-columns: 1fr auto 1fr !important;
-    align-items: center;
-    justify-content: stretch;
-    height: 86px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 72px !important;
+    padding: 0 16px !important;
+    gap: 8px !important;
+    position: relative !important;
   }
 
   .nav-left-col {
-    grid-column: 1;
-    grid-row: 1;
     display: flex !important;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .brand-center-wrapper {
-    grid-column: 2;
-    grid-row: 1;
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .nav-right-actions {
-    grid-column: 3;
-    grid-row: 1;
-    display: flex !important;
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  .nav-right-actions .btn-gold-fill {
-    padding: 7px 12px;
-    font-size: 0.76rem;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex: 0 0 40px !important;
+    position: static !important;
   }
 
   .mobile-menu-toggle {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
     width: 38px;
     height: 38px;
-    background: transparent;
-    border: none;
-    font-size: 1.45rem;
+    border-radius: var(--radius-xs);
+    background: var(--c-paper-100);
     color: var(--c-wine-900);
+    border: 1px solid var(--c-paper-300);
+    font-size: 1.25rem;
+    line-height: 1;
     cursor: pointer;
+    position: static !important;
+    transform: none !important;
+    margin: 0 !important;
+    flex-shrink: 0;
+  }
+
+  .brand-center-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 1 1 auto !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+
+  .brand-logo-img {
+    height: 50px !important;
+    max-width: 145px !important;
+    width: auto !important;
+    object-fit: contain !important;
+  }
+
+  .nav-right-actions {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex: 0 0 auto !important;
+    position: static !important;
+    transform: none !important;
+    gap: 0 !important;
+  }
+
+  .nav-right-actions .btn-gold-fill {
+    padding: 7px 13px !important;
+    font-size: 0.76rem !important;
+    letter-spacing: 0.01em !important;
+    white-space: nowrap !important;
+    border-radius: 20px !important;
   }
 
   .nav-phone-link {
-    display: none;
-    font-weight: 500 !important;
+    display: none !important;
   }
 
   .nav-links-list {
     position: fixed;
-    top: 86px;
+    top: 72px;
     left: 0;
     right: 0;
     background: #ffffff;
@@ -2187,64 +2211,6 @@ button, input, select, textarea {
     border-bottom: 1px solid var(--c-paper-100);
     display: block;
     width: 100%;
-  }
-
-  .mobile-menu-toggle {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-xs);
-    background: var(--c-paper-100);
-    color: var(--c-wine-900);
-    border: 1px solid var(--c-paper-300);
-    font-size: 1.3rem;
-    line-height: 1;
-  }
-
-  /* HTML structure has mobile-menu-toggle inside nav-right-actions. Let's force it to column 1 visually using absolute/grid, or let's just make toggleBtn relative */
-  /* Actually, to make it perfectly centered and keep toggleBtn inside container, we can let grid place elements. Since toggleBtn is inside nav-right-actions, we can move it inside HTML to container, or we can use absolute positioning on mobile for toggleBtn to keep it simple! */
-  /* Let's use absolute positioning on mobile for toggleBtn (left: 20px) and logo in center, booking button absolute right! That is 100% bulletproof and doesn't depend on DOM hierarchy! */
-  .site-navbar .container {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 86px;
-  }
-
-  .mobile-menu-toggle {
-    position: absolute;
-    left: 24px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex !important;
-  }
-
-  .brand-center-wrapper {
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-  }
-
-  .brand-logo-img {
-    height: 72px !important;
-  }
-
-  .nav-right-actions {
-    position: absolute;
-    right: 24px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex !important;
-    gap: 0;
-  }
-
-  .nav-right-actions .btn-gold-fill {
-    padding: 9px 15px !important;
-    font-size: 0.8rem !important;
   }
 
   .hero-centerpiece-section {
