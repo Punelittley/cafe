@@ -69,18 +69,7 @@ const DEFAULT_MENU_DATA = [
     badge: 'ХИТ',
     badgeType: 'hit'
   },
-  {
-    id: 'shashlik-pork',
-    title: 'Шашлык из свиной шеи',
-    category: 'hot',
-    categoryName: 'Горячие блюда',
-    price: 490,
-    weight: '200 / 50 / 30 г',
-    desc: 'Сочный и ароматный шашлык из отборного мяса с грузинскими специями',
-    image: 'assets/images/shashlyk.jpg',
-    badge: '',
-    badgeType: ''
-  },
+
   {
     id: 'steak-salmon',
     title: 'Стейк лосося и овощи гриль',
@@ -131,18 +120,7 @@ const DEFAULT_MENU_DATA = [
     badge: 'ТРАДИЦИЯ',
     badgeType: 'gold'
   },
-  {
-    id: 'borsh-trad',
-    title: 'Традиционный домашний суп',
-    category: 'soups',
-    categoryName: 'Супы',
-    price: 450,
-    weight: '350 мл',
-    desc: 'Наваристый мясной суп со сметаной, свежей зеленью и хрустящим чесночным лавашом.',
-    image: 'assets/images/borsh.png',
-    badge: 'НАВАРИСТЫЙ',
-    badgeType: 'gold'
-  },
+
 
   // Холодные закуски и Салаты
   {
@@ -238,7 +216,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v16_added_pork_loin';
+    const MENU_VERSION = 'v17_remove_shashlik_borsh';
     const savedVersion = localStorage.getItem('saperavi_menu_version');
     const savedMenu = localStorage.getItem('saperavi_menu_data');
 
