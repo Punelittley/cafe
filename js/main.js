@@ -83,11 +83,11 @@ const DEFAULT_MENU_DATA = [
   },
   {
     id: 'steak-salmon',
-    title: 'Стейк из лосося с овощами гриль',
+    title: 'Стейк лосося и овощи гриль',
     category: 'hot',
     categoryName: 'Горячие блюда',
     price: 550,
-    weight: '100 г / 290 ₽ овощи',
+    weight: '100 г / овощи 290 ₽',
     desc: 'Стейк атлантического лосося на гриле с лимоном, свежим укропом, сезонными овощами и белым соусом.',
     image: 'assets/images/salmon-steak.jpg',
     badge: 'ШЕФ-ВЫБОР',
@@ -226,7 +226,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v8_khinkali_photo_fixed';
+    const MENU_VERSION = 'v9_salmon_update';
     const savedVersion = localStorage.getItem('saperavi_menu_version');
     const savedMenu = localStorage.getItem('saperavi_menu_data');
 
