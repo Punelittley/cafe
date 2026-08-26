@@ -142,7 +142,7 @@ const DEFAULT_MENU_DATA = [
     categoryName: 'Холодные закуски',
     price: 430,
     weight: '200 г',
-    desc: 'Ломтики сыра на гриле с пикантными вялеными томатами, свежим базиликом и зёрнами граната.',
+    desc: 'Слайсы сыра на гриле с пикантными вялеными томатами, свежим базиликом и зёрнами граната.',
     image: 'assets/images/adyghe-cheese.jpg',
     badge: 'ЗАКУСКА',
     badgeType: 'gold'
@@ -216,7 +216,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v20_salmon_salad_ingredients';
+    const MENU_VERSION = 'v21_slices_cheese';
 
     const savedCloud = localStorage.getItem('saperavi_cloud_config');
     if (savedCloud) {
