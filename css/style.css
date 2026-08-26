@@ -1211,13 +1211,14 @@ button, input, select, textarea {
 .events-slider-track {
   position: relative;
   width: 100%;
-  height: 520px;
-  background: #000000;
+  height: 600px;
+  background: #0d0205;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
   .events-slider-track {
-    height: 340px;
+    height: 460px;
   }
 }
 
@@ -1229,6 +1230,10 @@ button, input, select, textarea {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
 .events-slide.active {
@@ -1236,12 +1241,29 @@ button, input, select, textarea {
   visibility: visible;
 }
 
-.events-slide img {
-  width: 100%;
+.slide-blur-bg {
+  position: absolute;
+  inset: -30px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(32px) brightness(0.38) saturate(1.2);
+  transform: scale(1.15);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.events-slide img.slide-main-img {
+  position: relative;
+  z-index: 2;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: 100%;
   object-fit: contain;
-  background-color: #0d0205; /* Matches the dark luxury theme of the site */
   display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 14px 40px rgba(0, 0, 0, 0.7));
+  border-radius: 4px;
 }
 
 .events-slide-caption {
@@ -1249,14 +1271,16 @@ button, input, select, textarea {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(180deg, transparent 0%, rgba(7, 1, 3, 0.85) 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(7, 1, 3, 0.88) 100%);
   color: #ffffff;
-  padding: 24px 30px 48px;
-  font-size: 1.05rem;
+  padding: 28px 30px 48px;
+  font-size: 1.1rem;
   font-family: var(--font-heading);
   letter-spacing: 0.02em;
   text-align: center;
   font-weight: 500;
+  z-index: 3;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
 /* Arrows */
