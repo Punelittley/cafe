@@ -226,7 +226,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v13_salad_update';
+    const MENU_VERSION = 'v14_penovani_update';
     const savedVersion = localStorage.getItem('saperavi_menu_version');
     const savedMenu = localStorage.getItem('saperavi_menu_data');
 
