@@ -43,8 +43,32 @@ const DEFAULT_MENU_DATA = [
     badge: 'НОВИНКА',
     badgeType: 'new'
   },
+  {
+    id: 'khachapuri-spinach',
+    title: 'Аджарская со шпинатом',
+    category: 'khinkali',
+    categoryName: 'Хачапури и хинкали',
+    price: 550,
+    weight: '320 г',
+    desc: 'Аджарский хачапури с сыром, шпинатом и яйцом',
+    image: 'assets/images/khachapuri-spinach.jpg',
+    badge: 'НОВИНКА',
+    badgeType: 'new'
+  },
 
   // Горячие блюда и Гриль
+  {
+    id: 'chicken-tapaka',
+    title: 'Цыпленок Тапака',
+    category: 'hot',
+    categoryName: 'Горячие блюда',
+    price: 950,
+    weight: '450 г',
+    desc: 'Маринованный цыпленок по-грузински, обжаренный до золотистой корочки, подается с отварным картофелем и соусом ткемали',
+    image: 'assets/images/chicken-tapaka.jpg',
+    badge: 'ХИТ',
+    badgeType: 'hit'
+  },
   {
     id: 'shashlik-pork',
     title: 'Шашлык из свиной шеи',
@@ -202,7 +226,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v6_reset_images_fixed';
+    const MENU_VERSION = 'v7_added_chicken_khachapuri';
     const savedVersion = localStorage.getItem('saperavi_menu_version');
     const savedMenu = localStorage.getItem('saperavi_menu_data');
 
