@@ -2095,14 +2095,6 @@ button, input, select, textarea {
    Responsive
    ========================================================================== */
 @media (max-width: 1100px) {
-  .site-navbar .container {
-    grid-template-columns: auto 1fr auto;
-  }
-  
-  .brand-center-wrapper {
-    order: -1;
-  }
-
   .nav-links-list {
     gap: 14px;
   }
@@ -2113,8 +2105,120 @@ button, input, select, textarea {
 }
 
 @media (max-width: 1024px) {
+  .site-navbar {
+    background: #ffffff;
+    height: 74px;
+  }
+
+  .site-navbar .container {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 74px !important;
+    padding: 0 16px !important;
+    gap: 8px !important;
+    position: relative !important;
+  }
+
+  .nav-left-col {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex: 0 0 44px !important;
+    order: 1 !important;
+    position: static !important;
+  }
+
+  .mobile-menu-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-xs);
+    background: var(--c-paper-100);
+    color: var(--c-wine-900);
+    border: 1px solid var(--c-paper-300);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    position: static !important;
+    transform: none !important;
+    margin: 0 !important;
+    flex-shrink: 0;
+  }
+
+  .brand-center-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 1 1 auto !important;
+    text-align: center !important;
+    order: 2 !important;
+    margin: 0 auto !important;
+  }
+
+  .brand-logo-img {
+    height: 52px !important;
+    max-width: 145px !important;
+    width: auto !important;
+    object-fit: contain !important;
+  }
+
+  .nav-right-actions {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    flex: 0 0 auto !important;
+    order: 3 !important;
+    position: static !important;
+    transform: none !important;
+    gap: 0 !important;
+  }
+
+  .nav-right-actions .btn-gold-fill {
+    padding: 8px 14px !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.01em !important;
+    white-space: nowrap !important;
+    border-radius: 20px !important;
+  }
+
   .nav-phone-link {
-    font-weight: 500 !important;
+    display: none !important;
+  }
+
+  .nav-links-list {
+    position: fixed;
+    top: 74px;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    flex-direction: column;
+    padding: 24px 20px;
+    gap: 16px;
+    border-bottom: 1px solid var(--c-paper-300);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+    transform: translateY(-160%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.35s ease, opacity 0.3s ease;
+    z-index: 1000;
+  }
+
+  .nav-links-list.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-item-link {
+    font-size: 1.05rem;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--c-paper-100);
+    display: block;
+    width: 100%;
   }
 
   .hero-dish-half-cut-wrap {
@@ -2145,117 +2249,14 @@ button, input, select, textarea {
     padding-bottom: 60px;
   }
 
-  .site-navbar {
-    background: #ffffff;
-    height: 72px;
-  }
-
-  .site-navbar .container {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    height: 72px !important;
-    padding: 0 16px !important;
-    gap: 8px !important;
-    position: relative !important;
-  }
-
-  .nav-left-col {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    flex: 0 0 40px !important;
-    position: static !important;
-  }
-
-  .mobile-menu-toggle {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: var(--radius-xs);
-    background: var(--c-paper-100);
-    color: var(--c-wine-900);
-    border: 1px solid var(--c-paper-300);
-    font-size: 1.25rem;
-    line-height: 1;
-    cursor: pointer;
-    position: static !important;
-    transform: none !important;
-    margin: 0 !important;
-    flex-shrink: 0;
-  }
-
-  .brand-center-wrapper {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    flex: 1 1 auto !important;
-    text-align: center !important;
-    margin: 0 auto !important;
-  }
-
   .brand-logo-img {
-    height: 50px !important;
-    max-width: 145px !important;
-    width: auto !important;
-    object-fit: contain !important;
-  }
-
-  .nav-right-actions {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    flex: 0 0 auto !important;
-    position: static !important;
-    transform: none !important;
-    gap: 0 !important;
+    height: 48px !important;
+    max-width: 130px !important;
   }
 
   .nav-right-actions .btn-gold-fill {
-    padding: 7px 13px !important;
-    font-size: 0.76rem !important;
-    letter-spacing: 0.01em !important;
-    white-space: nowrap !important;
-    border-radius: 20px !important;
-  }
-
-  .nav-phone-link {
-    display: none !important;
-  }
-
-  .nav-links-list {
-    position: fixed;
-    top: 72px;
-    left: 0;
-    right: 0;
-    background: #ffffff;
-    flex-direction: column;
-    padding: 24px 20px;
-    gap: 16px;
-    border-bottom: 1px solid var(--c-paper-300);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
-    transform: translateY(-160%);
-    opacity: 0;
-    pointer-events: none;
-    transition: transform 0.35s ease, opacity 0.3s ease;
-    z-index: 1000;
-  }
-
-  .nav-links-list.open {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .nav-item-link {
-    font-size: 1.05rem;
-    padding: 6px 0;
-    border-bottom: 1px solid var(--c-paper-100);
-    display: block;
-    width: 100%;
+    padding: 7px 11px !important;
+    font-size: 0.74rem !important;
   }
 
   .hero-centerpiece-section {
