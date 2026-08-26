@@ -125,56 +125,7 @@
           <div class="categories-section-heading">Популярные категории</div>
         </div>
 
-        <!-- Навигация по категориям с линейными иконками -->
-        <div class="categories-icon-nav">
-          <!-- Все позиции -->
-          <button class="cat-icon-tab-btn active" data-category="all" onclick="setMenuCategory('all', this)">
-            <div class="cat-icon-svg-box">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
-            </div>
-            <span class="cat-icon-label">Все меню</span>
-          </button>
 
-          <!-- Салаты и Закуски -->
-          <button class="cat-icon-tab-btn" data-category="salads" onclick="setMenuCategory('salads', this)">
-            <div class="cat-icon-svg-box">
-              <svg viewBox="0 0 24 24"><path d="M4 11a8 8 0 0 0 16 0H4z"/><path d="M7 8c1.5-2 3.5-3 5-3s3.5 1 5 3"/><circle cx="9" cy="8" r="1.5"/><circle cx="15" cy="8" r="1.5"/><path d="M12 4v2"/></svg>
-            </div>
-            <span class="cat-icon-label">Холодные закуски</span>
-          </button>
-
-          <!-- Хинкали и Хачапури -->
-          <button class="cat-icon-tab-btn" data-category="khinkali" onclick="setMenuCategory('khinkali', this)">
-            <div class="cat-icon-svg-box">
-              <svg viewBox="0 0 24 24"><path d="M5 16c2-8 12-8 14 0"/><path d="M12 4v4"/><path d="M10 4h4"/><circle cx="12" cy="12" r="2.5"/><path d="M4 17a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3"/></svg>
-            </div>
-            <span class="cat-icon-label">Хачапури и хинкали</span>
-          </button>
-
-          <!-- Супы -->
-          <button class="cat-icon-tab-btn" data-category="soups" onclick="setMenuCategory('soups', this)">
-            <div class="cat-icon-svg-box">
-              <svg viewBox="0 0 24 24"><path d="M4 10a8 8 0 0 0 16 0H4z"/><path d="M12 3c-1 1-1 2 0 3s1 2 0 3"/><path d="M8 4c-1 1-1 2 0 3"/><path d="M16 4c-1 1-1 2 0 3"/><path d="M2 19h20"/></svg>
-            </div>
-            <span class="cat-icon-label">Супы</span>
-          </button>
-
-          <!-- Горячие блюда и Гриль -->
-          <button class="cat-icon-tab-btn" data-category="hot" onclick="setMenuCategory('hot', this)">
-            <div class="cat-icon-svg-box">
-              <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/><path d="M6 18h12"/><circle cx="12" cy="7" r="3"/><path d="M3 21h18"/></svg>
-            </div>
-            <span class="cat-icon-label">Горячие блюда</span>
-          </button>
-        </div>
-
-        <!-- Поисковая строка -->
-        <div class="menu-search-bar-wrap">
-          <div class="search-field-wrap">
-            <span class="search-icon-symbol">⌕</span>
-            <input type="text" id="menu-search-input" class="menu-search-input" placeholder="Поиск по названию или ингредиентам...">
-          </div>
-        </div>
 
         <!-- Сетка карточек меню -->
         <div class="menu-cards-grid" id="menu-items-grid">
