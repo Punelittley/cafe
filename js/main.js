@@ -147,7 +147,7 @@ const DEFAULT_MENU_DATA = [
   },
   {
     id: 'adyghe-cheese',
-    title: 'Жареный Адыгейский сыр с вялеными томатами',
+    title: 'Жареный Адыгейский сыр с вялеными томатами, приправленный базиликом',
     category: 'salads',
     categoryName: 'Холодные закуски',
     price: 430,
@@ -226,7 +226,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v10_kharcho_update';
+    const MENU_VERSION = 'v11_cheese_update';
     const savedVersion = localStorage.getItem('saperavi_menu_version');
     const savedMenu = localStorage.getItem('saperavi_menu_data');
 
