@@ -105,6 +105,18 @@ const DEFAULT_MENU_DATA = [
     badge: 'НА ГРИЛЕ',
     badgeType: 'leader'
   },
+  {
+    id: 'pork-loin',
+    title: 'Свиная корейка гриль с жареным картофелем по-домашнему',
+    category: 'hot',
+    categoryName: 'Горячие блюда',
+    price: 350,
+    weight: 'за 100 г / картофель 250 ₽',
+    desc: 'Ароматная свиная корейка на кости, приготовленная на гриле, подается с золотистым домашним жареным картофелем с луком и зеленью.',
+    image: 'assets/images/pork-loin.jpg',
+    badge: 'НОВИНКА',
+    badgeType: 'new'
+  },
 
   // Супы
   {
@@ -226,7 +238,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v15_trout_update';
+    const MENU_VERSION = 'v16_added_pork_loin';
     const savedVersion = localStorage.getItem('saperavi_menu_version');
     const savedMenu = localStorage.getItem('saperavi_menu_data');
 
