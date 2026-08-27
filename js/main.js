@@ -91,7 +91,7 @@ const DEFAULT_MENU_DATA = [
     price: 400,
     pricePrefix: 'от',
     weight: 'за 100 г',
-    desc: 'Цельная радужная форель, запеченная на решетке с пряными травами, рукколой и домашним соусом мацони.',
+    desc: 'Цельная форель гриль с соусом мацони, гранатом, кинзой и лимоном.',
     image: 'assets/images/trout-grill.jpg',
     badge: 'НА ГРИЛЕ',
     badgeType: 'leader'
@@ -208,7 +208,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v23_remove_pork_loin';
+    const MENU_VERSION = 'v24_trout_desc_update';
 
     const savedCloud = localStorage.getItem('saperavi_cloud_config');
     if (savedCloud) {
