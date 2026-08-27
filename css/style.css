@@ -467,10 +467,10 @@ button, input, select, textarea {
 
 .about-label-tag {
   display: inline-block;
-  font-size: 0.84rem;
+  font-size: 0.86rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #9c6700;
+  color: #d49200;
   font-weight: 800;
   margin-bottom: 12px;
 }
@@ -667,10 +667,10 @@ button, input, select, textarea {
 
 .section-eyebrow {
   display: inline-block;
-  font-size: 0.84rem;
+  font-size: 0.86rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #9c6700;
+  color: #d49200;
   font-weight: 800;
   margin-bottom: 8px;
 }
@@ -1083,11 +1083,11 @@ button, input, select, textarea {
 }
 
 .meal-time-hint {
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--c-gold-700);
-  font-weight: 700;
+  color: #d49200;
+  font-weight: 800;
   margin-bottom: 8px;
 }
 
@@ -1461,11 +1461,11 @@ button, input, select, textarea {
 }
 
 .contact-category-pill {
-  font-size: 0.72rem;
+  font-size: 0.76rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--c-gold-700);
-  font-weight: 700;
+  color: #d49200;
+  font-weight: 800;
 }
 
 .contact-card-title {
