@@ -610,6 +610,106 @@
     </div>
   </div>
 
+  <!-- Модальное окно добавления нового блюда -->
+  <div id="add-dish-modal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 20px; overflow-y: auto;">
+    <div class="admin-panel-card" style="max-width: 540px; width: 100%; margin: auto; position: relative; border: 1px solid var(--admin-gold); box-shadow: 0 20px 50px rgba(0,0,0,0.8); max-height: 90vh; overflow-y: auto;">
+      <button onclick="closeAddDishModal()" style="position: absolute; right: 16px; top: 16px; background: transparent; color: #fff; font-size: 1.3rem; cursor: pointer; line-height: 1;">✕</button>
+      
+      <h3 style="color: var(--admin-gold); margin-bottom: 20px; font-family: var(--font-heading); font-size: 1.4rem;">+ Добавление нового блюда</h3>
+      
+      <form id="add-dish-form" onsubmit="submitNewDishForm(event)">
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
+            Название блюда: *
+          </label>
+          <input type="text" id="new-dish-title" class="admin-input-dark" placeholder="например, Шашлык из свиной шейки" required style="margin-bottom: 0;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+          <div>
+            <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
+              Категория: *
+            </label>
+            <select id="new-dish-category" class="admin-input-dark" style="margin-bottom: 0; padding: 10px 14px;">
+              <option value="khinkali">Хинкали</option>
+              <option value="khachapuri">Хачапури</option>
+              <option value="hot" selected>Горячее и Гриль</option>
+              <option value="soups">Супы</option>
+              <option value="salads">Салаты и Закуски</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
+              Бейджик:
+            </label>
+            <select id="new-dish-badge" class="admin-input-dark" style="margin-bottom: 0; padding: 10px 14px;">
+              <option value="">Без бейджика</option>
+              <option value="hit">ХИТ (hit)</option>
+              <option value="new">НОВИНКА (new)</option>
+              <option value="chef">ШЕФ-ВЫБОР (chef)</option>
+              <option value="leader">НА ГРИЛЕ (leader)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+          <div>
+            <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
+              Цена (₽): *
+            </label>
+            <input type="number" id="new-dish-price" class="admin-input-dark" placeholder="450" required style="margin-bottom: 4px;">
+            <label style="font-size: 0.78rem; color: rgba(255,255,255,0.7); display: flex; align-items: center; gap: 6px; cursor: pointer;">
+              <input type="checkbox" id="new-dish-price-prefix"> Указать цену «от» (по весу)
+            </label>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
+              Граммовка / порция:
+            </label>
+            <input type="text" id="new-dish-weight" class="admin-input-dark" placeholder="250 г / 1 шт." style="margin-bottom: 0;">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
+            Описание и состав блюда:
+          </label>
+          <textarea id="new-dish-desc" class="admin-input-dark" rows="3" placeholder="Нежные кусочки мяса, маринованные в кавказских травах..." style="margin-bottom: 0;"></textarea>
+        </div>
+
+        <!-- Фото нового блюда -->
+        <div style="margin-bottom: 18px; padding: 14px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid rgba(220,190,124,0.2);">
+          <label style="display: block; font-size: 0.84rem; color: var(--admin-gold); margin-bottom: 10px; font-weight: 600;">
+            📷 Фотография блюда:
+          </label>
+
+          <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 10px;">
+            <img id="new-dish-photo-preview" src="assets/images/brand-card.jpg" style="width: 80px; height: 65px; object-fit: cover; border-radius: 8px; border: 1px solid var(--admin-border);">
+            <div style="flex: 1;">
+              <input type="file" id="new-dish-file-picker" accept="image/*" style="display: none;" onchange="onNewDishPhotoFile(event)">
+              <button type="button" onclick="document.getElementById('new-dish-file-picker').click()" class="btn-action-gold" style="width: 100%; justify-content: center; padding: 8px; background: #2563eb; color: #fff; font-size: 0.82rem;">
+                📁 Загрузить с устройства
+              </button>
+            </div>
+          </div>
+
+          <input type="text" id="new-dish-photo-url" class="admin-input-dark" placeholder="Или ссылка на фото (https://...)" oninput="onNewDishPhotoUrl(this.value)" style="margin-bottom: 0; font-size: 0.84rem;">
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <button type="submit" class="btn-action-gold" style="flex: 1; justify-content: center; padding: 12px; font-size: 0.95rem;">
+            ✓ Добавить блюдо в меню
+          </button>
+          <button type="button" onclick="closeAddDishModal()" class="admin-logout-btn" style="padding: 12px 18px; border-radius: 20px;">
+            Отмена
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script src="js/main.js"></script>
   <script>
     const AUTH_PASS = 'saperavi2024';
@@ -716,28 +816,112 @@
       }
     }
 
+    let newDishPhotoData = 'assets/images/brand-card.jpg';
+
     function addNewDishModal() {
-      const title = prompt('Название нового блюда:');
-      if (!title) return;
-      const price = parseInt(prompt('Цена (₽):') || '0', 10);
-      const weight = prompt('Граммовка / вес:') || '300 г';
-      const desc = prompt('Краткое описание:') || 'Традиционное грузинское блюдо.';
-      const image = prompt('Путь к фото (или assets/images/brand-card.jpg):') || 'assets/images/brand-card.jpg';
+      newDishPhotoData = 'assets/images/brand-card.jpg';
+      document.getElementById('add-dish-form').reset();
+      document.getElementById('new-dish-photo-preview').src = newDishPhotoData;
+      document.getElementById('new-dish-photo-url').value = '';
+      document.getElementById('add-dish-modal').style.display = 'flex';
+    }
+
+    function closeAddDishModal() {
+      document.getElementById('add-dish-modal').style.display = 'none';
+    }
+
+    function onNewDishPhotoUrl(val) {
+      newDishPhotoData = val.trim() || 'assets/images/brand-card.jpg';
+      document.getElementById('new-dish-photo-preview').src = newDishPhotoData;
+    }
+
+    function onNewDishPhotoFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const MAX_SIZE = 800;
+
+          if (width > height) {
+            if (width > MAX_SIZE) {
+              height *= MAX_SIZE / width;
+              width = MAX_SIZE;
+            }
+          } else {
+            if (height > MAX_SIZE) {
+              width *= MAX_SIZE / height;
+              height = MAX_SIZE;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const compressed = canvas.toDataURL('image/jpeg', 0.85);
+          newDishPhotoData = compressed;
+          document.getElementById('new-dish-photo-preview').src = compressed;
+          document.getElementById('new-dish-photo-url').value = '(Загружено с устройства)';
+        };
+        img.src = evt.target.result;
+      };
+      reader.readAsDataURL(file);
+      e.target.value = '';
+    }
+
+    function submitNewDishForm(e) {
+      e.preventDefault();
+      const title = document.getElementById('new-dish-title').value.trim();
+      const category = document.getElementById('new-dish-category').value;
+      const price = parseInt(document.getElementById('new-dish-price').value, 10) || 0;
+      const hasPrefix = document.getElementById('new-dish-price-prefix').checked;
+      const weight = document.getElementById('new-dish-weight').value.trim() || '300 г';
+      const desc = document.getElementById('new-dish-desc').value.trim() || 'Традиционное грузинское блюдо.';
+      const badgeType = document.getElementById('new-dish-badge').value;
+
+      const catNames = {
+        khinkali: 'Хачапури и хинкали',
+        khachapuri: 'Хачапури и хинкали',
+        hot: 'Горячие блюда',
+        soups: 'Супы',
+        salads: 'Салаты и Закуски'
+      };
+
+      const badgeTitles = {
+        hit: 'ХИТ',
+        new: 'НОВИНКА',
+        chef: 'ШЕФ-ВЫБОР',
+        leader: 'НА ГРИЛЕ'
+      };
 
       const newDish = {
         id: 'dish-' + Date.now(),
         title,
-        category: 'hot',
-        categoryName: 'Горячие блюда',
+        category,
+        categoryName: catNames[category] || 'Горячие блюда',
         price,
         weight,
         desc,
-        image
+        image: newDishPhotoData || 'assets/images/brand-card.jpg'
       };
+
+      if (hasPrefix) newDish.pricePrefix = 'от';
+      if (badgeType) {
+        newDish.badge = badgeTitles[badgeType] || 'ХИТ';
+        newDish.badgeType = badgeType;
+      }
 
       AppState.menu.unshift(newDish);
       saveData();
       renderDishesTable();
+      closeAddDishModal();
     }
 
     function initCloudSettings() {
