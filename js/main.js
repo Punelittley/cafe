@@ -164,14 +164,16 @@ const DEFAULT_LUNCH_INFO = {
   ]
 };
 
+const DEFAULT_CLOUD_CONFIG = {
+  enabled: true,
+  restUrl: 'https://moving-iguana-152349.upstash.io',
+  restToken: 'gQAAAAAAAlMdAAIgcDFiYzAyOTA5Mzg3OWQ0ZDhmOGM4OWJmNmU3ZTBhYjJiYg'
+};
+
 const AppState = {
   menu: [],
   lunch: {},
-  cloudConfig: {
-    enabled: false,
-    restUrl: '',
-    restToken: ''
-  },
+  cloudConfig: { ...DEFAULT_CLOUD_CONFIG },
   currentCategory: 'all',
   searchQuery: '',
   isAdminLoggedIn: false
@@ -224,6 +226,9 @@ function loadLocalData() {
     const savedCloud = localStorage.getItem('saperavi_cloud_config');
     if (savedCloud) {
       AppState.cloudConfig = JSON.parse(savedCloud);
+    } else {
+      AppState.cloudConfig = { ...DEFAULT_CLOUD_CONFIG };
+      localStorage.setItem('saperavi_cloud_config', JSON.stringify(AppState.cloudConfig));
     }
 
     const savedVersion = localStorage.getItem('saperavi_menu_version');
@@ -288,7 +293,10 @@ async function syncFromCloudRedis() {
     if (res.ok) {
       const data = await res.json();
       if (data && data.result) {
-        const cloudMenu = typeof data.result === 'string' ? JSON.parse(data.result) : data.result;
+        let cloudMenu = typeof data.result === 'string' ? JSON.parse(data.result) : data.result;
+        if (Array.isArray(cloudMenu) && cloudMenu.length === 1 && typeof cloudMenu[0] === 'string') {
+          cloudMenu = JSON.parse(cloudMenu[0]);
+        }
         if (Array.isArray(cloudMenu) && cloudMenu.length > 0) {
           const hasLegacy = cloudMenu.some(item => item.id === 'shashlik-pork' || item.id === 'borsh-trad');
           if (hasLegacy) {
@@ -319,7 +327,7 @@ async function saveToCloudRedis() {
         Authorization: `Bearer ${AppState.cloudConfig.restToken}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify([JSON.stringify(AppState.menu)])
+      body: JSON.stringify(AppState.menu)
     });
 
     return res.ok;
