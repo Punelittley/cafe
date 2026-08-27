@@ -2247,10 +2247,6 @@ button, input, select, textarea {
 }
 
 @media (max-width: 768px) {
-  body {
-    padding-bottom: 60px;
-  }
-
   .brand-logo-img {
     height: 48px !important;
     max-width: 130px !important;
@@ -2311,9 +2307,7 @@ button, input, select, textarea {
     grid-template-columns: 1fr;
   }
 
-  .mobile-action-bar {
-    display: block;
-  }
+
 
   .footer-columns-grid {
     grid-template-columns: 1fr;
