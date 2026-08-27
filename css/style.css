@@ -645,7 +645,7 @@ button, input, select, textarea {
   font-size: clamp(2.4rem, 4.5vw, 3.6rem);
   color: #b87800 !important;
   display: block;
-  margin: 0 auto 10px;
+  margin: -14px auto 18px;
   font-weight: 800;
   letter-spacing: 0.03em;
   line-height: 1.2;
