@@ -584,18 +584,18 @@
         showDashboard();
       }
 
-      const VALID_PASSWORDS = ['saperavi2025', 'saperavi2026', 'saperavi2024', 'admin', '7777', 'saperavi'];
+      const STRONG_ADMIN_PASS = 'Saperavi#2026!Perm';
 
       document.getElementById('admin-login-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const pass = document.getElementById('admin-pass-input').value.trim();
         const errEl = document.getElementById('login-error-msg');
 
-        if (VALID_PASSWORDS.includes(pass.toLowerCase())) {
+        if (pass === STRONG_ADMIN_PASS) {
           sessionStorage.setItem('saperavi_admin_auth', 'true');
           showDashboard();
         } else {
-          errEl.textContent = 'Неверный пароль. Попробуйте другой.';
+          errEl.textContent = 'Неверный пароль доступа!';
           errEl.style.display = 'block';
         }
       });
