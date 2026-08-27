@@ -519,23 +519,56 @@
         </div>
       </div>
 
-      <!-- ВКЛАДКА 4: РЕЗЕРВНЫЕ КОПИИ -->
+      <!-- ВКЛАДКА 4: РЕЗЕРВНЫЕ КОПИИ И ИМПОРТ/ЭКСПОРТ -->
       <div id="tab-backup" class="tab-content-pane" style="display: none;">
-        <div class="admin-panel-card">
-          <h2 class="panel-title" style="margin-bottom: 16px;">Резервные копии и экспорт</h2>
-          <p style="font-size: 0.86rem; color: rgba(255,255,255,0.7); margin-bottom: 20px;">
-            Вы можете скачать полное меню в формате JSON или восстановить базу из сохраненного файла.
+        <div class="admin-panel-card" style="margin-bottom: 24px;">
+          <h2 class="panel-title" style="margin-bottom: 12px;">📥 Скачать (Экспорт) базу данных</h2>
+          <p style="font-size: 0.86rem; color: rgba(255,255,255,0.7); margin-bottom: 18px;">
+            Скачайте резервную копию базы данных со всеми блюдами, ценами, описаниями и настройками в один файл <code>.json</code>.
           </p>
-
           <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-            <button onclick="exportMenuJsonFile()" class="btn-action-gold">
-              📥 Скачать файл меню (JSON)
+            <button onclick="exportMenuJsonFile()" class="btn-action-gold" style="padding: 10px 20px; font-size: 0.92rem;">
+              📥 Скачать полную базу данных (.JSON)
             </button>
-
-            <button onclick="resetMenuToFactoryDefaults()" class="admin-logout-btn">
-              🔄 Сбросить к стандартному меню кафе
+            <button onclick="copyDbJsonToClipboard()" class="btn-action-gold" style="background: transparent; border: 1px solid var(--admin-gold); color: #ffffff; padding: 10px 20px;">
+              📋 Скопировать JSON в буфер
             </button>
           </div>
+        </div>
+
+        <div class="admin-panel-card" style="margin-bottom: 24px;">
+          <h2 class="panel-title" style="margin-bottom: 12px;">📤 Загрузить (Импорт) базу данных в сайт</h2>
+          <p style="font-size: 0.86rem; color: rgba(255,255,255,0.7); margin-bottom: 18px;">
+            Восстановите или замените всё меню сайта из файла <code>.json</code> или вставив текст базы. Данные сразу сохранятся на сайте и в облаке Redis.
+          </p>
+
+          <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 20px;">
+            <input type="file" id="db-file-input" accept=".json,application/json" style="display: none;" onchange="importDbFromFile(event)">
+            <button onclick="document.getElementById('db-file-input').click()" class="btn-action-gold" style="background: #2563eb; color: #ffffff; padding: 10px 20px;">
+              📂 Выбрать и загрузить файл .JSON
+            </button>
+          </div>
+
+          <label style="display: block; font-size: 0.84rem; color: var(--admin-gold); margin-bottom: 6px; font-weight: 600;">
+            Или вставьте текст базы данных (JSON) сюда:
+          </label>
+          <textarea id="import-json-textarea" class="admin-input-dark" placeholder='[{"id":"khinkali-tel-svin","title":"Хинкали...","price":330...}]' style="height: 120px; font-family: monospace; font-size: 0.8rem; width: 100%; margin-bottom: 12px; resize: vertical;"></textarea>
+          
+          <button onclick="importDbFromTextarea()" class="btn-action-gold" style="padding: 10px 20px;">
+            🚀 Применить и обновить сайт
+          </button>
+
+          <div id="import-status-msg" style="margin-top: 14px; font-size: 0.9rem; font-weight: 500;"></div>
+        </div>
+
+        <div class="admin-panel-card">
+          <h2 class="panel-title" style="margin-bottom: 12px; color: #f87171;">⚠️ Сброс к заводским настройкам</h2>
+          <p style="font-size: 0.86rem; color: rgba(255,255,255,0.7); margin-bottom: 18px;">
+            Если нужно вернуть исходное стандартное меню кафе (10 блюд) и сбросить все ручные изменения:
+          </p>
+          <button onclick="resetMenuToFactoryDefaults()" class="admin-logout-btn" style="border: 1px solid #ef4444; color: #f87171;">
+            🔄 Сбросить к стандартному меню кафе
+          </button>
         </div>
       </div>
 
@@ -737,18 +770,103 @@
     }
 
     function exportMenuJsonFile() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(AppState.menu, null, 2));
+      const exportObject = {
+        exportedAt: new Date().toISOString(),
+        version: "saperavi_v1",
+        menu: AppState.menu,
+        lunch: AppState.lunch
+      };
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObject, null, 2));
       const dlAnchor = document.createElement('a');
       dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", "saperavi-menu-backup.json");
+      dlAnchor.setAttribute("download", `saperavi-db-${new Date().toISOString().slice(0,10)}.json`);
       dlAnchor.click();
     }
 
+    function copyDbJsonToClipboard() {
+      const exportObject = {
+        exportedAt: new Date().toISOString(),
+        menu: AppState.menu,
+        lunch: AppState.lunch
+      };
+      const text = JSON.stringify(exportObject, null, 2);
+      navigator.clipboard.writeText(text).then(() => {
+        alert('JSON базы данных успешно скопирован в буфер обмена!');
+      }).catch(err => {
+        prompt('Скопируйте JSON вручную:', text);
+      });
+    }
+
+    function importDbFromFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = async function(evt) {
+        try {
+          const content = evt.target.result;
+          await applyImportedJson(content);
+        } catch (err) {
+          showImportStatus(`Ошибка чтения файла: ${err.message}`, false);
+        }
+      };
+      reader.readAsText(file);
+      e.target.value = '';
+    }
+
+    async function importDbFromTextarea() {
+      const rawText = document.getElementById('import-json-textarea').value.trim();
+      if (!rawText) {
+        showImportStatus('Пожалуйста, сначала вставьте текст JSON в поле!', false);
+        return;
+      }
+      await applyImportedJson(rawText);
+    }
+
+    async function applyImportedJson(rawJson) {
+      const statusEl = document.getElementById('import-status-msg');
+      try {
+        const parsed = JSON.parse(rawJson);
+        let importedMenu = null;
+        let importedLunch = null;
+
+        if (Array.isArray(parsed)) {
+          importedMenu = parsed;
+        } else if (parsed && Array.isArray(parsed.menu)) {
+          importedMenu = parsed.menu;
+          if (parsed.lunch) importedLunch = parsed.lunch;
+        } else {
+          throw new Error('В файле/тексте не найден массив блюд.');
+        }
+
+        if (importedMenu.length === 0) {
+          throw new Error('Список блюд пуст.');
+        }
+
+        AppState.menu = importedMenu;
+        if (importedLunch) AppState.lunch = importedLunch;
+
+        await saveData();
+        renderDishesTable();
+
+        showImportStatus(`✓ Успешно импортировано блюд: ${importedMenu.length}! Данные сохранены и отправлены в Redis.`, true);
+      } catch (err) {
+        showImportStatus(`❌ Ошибка импорта: ${err.message}. Проверьте правильность формата JSON.`, false);
+      }
+    }
+
+    function showImportStatus(msg, isSuccess) {
+      const statusEl = document.getElementById('import-status-msg');
+      if (!statusEl) return;
+      statusEl.innerHTML = `<span style="color: ${isSuccess ? '#4ade80' : '#f87171'};">${msg}</span>`;
+    }
+
     function resetMenuToFactoryDefaults() {
-      if (confirm('Сбросить меню к первоначальным стандартным блюдам ресторана?')) {
+      if (confirm('Сбросить меню к первоначальным стандартным блюдам ресторана (10 блюд)?')) {
         AppState.menu = [...DEFAULT_MENU_DATA];
         saveData();
         renderDishesTable();
+        alert('Меню сброшено к стандартному и сохранено в базе!');
       }
     }
 
