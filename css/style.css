@@ -643,7 +643,7 @@ button, input, select, textarea {
 .georgian-decor-phrase {
   font-family: var(--font-heading);
   font-size: clamp(3rem, 8vw, 4.8rem);
-  color: #000000;
+  color: #a86e00 !important;
   display: block;
   margin-bottom: 12px;
   font-weight: 800;
@@ -2272,7 +2272,7 @@ button, input, select, textarea {
 
   .georgian-decor-phrase {
     font-size: clamp(2.4rem, 9.5vw, 3.5rem) !important;
-    color: #000000 !important;
+    color: #a86e00 !important;
     white-space: nowrap !important;
   }
 }
