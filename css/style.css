@@ -1404,7 +1404,7 @@ button, input, select, textarea {
    ========================================================================== */
 .contacts-map-section {
   padding: 90px 0 0;
-  background: transparent;
+  background: var(--c-paper-100);
   position: relative;
 }
 
