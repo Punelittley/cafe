@@ -471,8 +471,7 @@
                 <tr>
                   <th style="width: 70px;">Фото</th>
                   <th>Название блюда</th>
-                  <th style="width: 140px;">Категория</th>
-                  <th style="width: 100px;">Цена (₽)</th>
+                  <th style="width: 110px;">Цена (₽)</th>
                   <th style="width: 100px;">Порция</th>
                   <th>Описание</th>
                   <th style="width: 60px;">Удалить</th>
@@ -489,27 +488,21 @@
       <!-- ВКЛАДКА 2: ЛАНЧИ И ЗАВТРАКИ -->
       <div id="tab-lunches" class="tab-content-pane" style="display: none;">
         <div class="admin-panel-card">
-          <h2 class="panel-title" style="margin-bottom: 18px;">Настройка Дневного предложения</h2>
-          
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="panel-header-row" style="margin-bottom: 20px;">
             <div>
-              <label style="display: block; font-size: 0.84rem; color: var(--admin-gold); margin-bottom: 6px;">Время ланчей:</label>
-              <input type="text" id="lunch-time-input" class="admin-input-dark" value="Пн–Пт с 12:00 до 16:00">
+              <h2 class="panel-title">Управление Бизнес-ланчами и Завтраками</h2>
+              <p style="font-size: 0.84rem; color: rgba(255,255,255,0.6); margin: 4px 0 0;">
+                Редактируйте тексты, бейджики, фото/видео, добавляйте новые карточки или удаляйте ненужные.
+              </p>
             </div>
-            <div>
-              <label style="display: block; font-size: 0.84rem; color: var(--admin-gold); margin-bottom: 6px;">Цена бизнес-ланча (от):</label>
-              <input type="text" id="lunch-price-input" class="admin-input-dark" value="от 390 ₽">
-            </div>
+            <button onclick="openAddOfferModal()" class="btn-action-gold">
+              + Добавить спецпредложение
+            </button>
           </div>
 
-          <div style="margin-top: 14px;">
-            <label style="display: block; font-size: 0.84rem; color: var(--admin-gold); margin-bottom: 6px;">Описание и блюда обеда:</label>
-            <textarea id="lunch-desc-input" class="admin-input-dark" rows="3">Суп дня (харчо или куриный бульон), горячее с гарниром, свежая выпечка и домашний напиток.</textarea>
+          <div id="admin-offers-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+            <!-- Заполняется динамически из AppState.mealOffers -->
           </div>
-
-          <button onclick="saveLunchSettings()" class="btn-action-gold" style="margin-top: 10px;">
-            Сохранить дневное предложение
-          </button>
         </div>
       </div>
 
@@ -618,25 +611,12 @@
       <h3 style="color: var(--admin-gold); margin-bottom: 20px; font-family: var(--font-heading); font-size: 1.4rem;">+ Добавление нового блюда</h3>
       
       <form id="add-dish-form" onsubmit="submitNewDishForm(event)">
-        <div style="margin-bottom: 14px;">
-          <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
-            Название блюда: *
-          </label>
-          <input type="text" id="new-dish-title" class="admin-input-dark" placeholder="например, Шашлык из свиной шейки" required style="margin-bottom: 0;">
-        </div>
-
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
           <div>
             <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
-              Категория: *
+              Название блюда: *
             </label>
-            <select id="new-dish-category" class="admin-input-dark" style="margin-bottom: 0; padding: 10px 14px;">
-              <option value="khinkali">Хинкали</option>
-              <option value="khachapuri">Хачапури</option>
-              <option value="hot" selected>Горячее и Гриль</option>
-              <option value="soups">Супы</option>
-              <option value="salads">Салаты и Закуски</option>
-            </select>
+            <input type="text" id="new-dish-title" class="admin-input-dark" placeholder="например, Шашлык из свиной шейки" required style="margin-bottom: 0;">
           </div>
 
           <div>
@@ -710,6 +690,82 @@
     </div>
   </div>
 
+  <!-- Модальное окно добавления спецпредложения / ланча / завтрака -->
+  <div id="add-offer-modal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 20px; overflow-y: auto;">
+    <div class="admin-panel-card" style="max-width: 520px; width: 100%; margin: auto; position: relative; border: 1px solid var(--admin-gold); box-shadow: 0 20px 50px rgba(0,0,0,0.8); max-height: 90vh; overflow-y: auto;">
+      <button onclick="closeAddOfferModal()" style="position: absolute; right: 16px; top: 16px; background: transparent; color: #fff; font-size: 1.3rem; cursor: pointer; line-height: 1;">✕</button>
+      
+      <h3 style="color: var(--admin-gold); margin-bottom: 20px; font-family: var(--font-heading); font-size: 1.4rem;">+ Добавить ланч / завтрак / спецпредложение</h3>
+      
+      <form id="add-offer-form" onsubmit="submitNewOfferForm(event)">
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
+            Заголовок предложения: *
+          </label>
+          <input type="text" id="new-offer-title" class="admin-input-dark" placeholder="например, Сет «Грузинский обед»" required style="margin-bottom: 0;">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+          <div>
+            <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
+              Бейджик / скидка:
+            </label>
+            <input type="text" id="new-offer-badge" class="admin-input-dark" placeholder="-15% в будни" style="margin-bottom: 0;">
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
+              Время действия:
+            </label>
+            <input type="text" id="new-offer-time" class="admin-input-dark" placeholder="Пн–Пт с 12:00 до 16:00" style="margin-bottom: 0;">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
+            Описание и состав:
+          </label>
+          <textarea id="new-offer-desc" class="admin-input-dark" rows="3" placeholder="Суп харчо, хинкали со свининой и телятиной, свежий чай с травами..." style="margin-bottom: 0;"></textarea>
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <label style="display: block; font-size: 0.84rem; color: #fff; margin-bottom: 6px; font-weight: 600;">
+            Текст кнопки бронирования:
+          </label>
+          <input type="text" id="new-offer-btn-text" class="admin-input-dark" placeholder="Забронировать столик" value="Забронировать столик" style="margin-bottom: 0;">
+        </div>
+
+        <!-- Фото или видео предложения -->
+        <div style="margin-bottom: 18px; padding: 14px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid rgba(220,190,124,0.2);">
+          <label style="display: block; font-size: 0.84rem; color: var(--admin-gold); margin-bottom: 10px; font-weight: 600;">
+            📷 Фото или Видео:
+          </label>
+
+          <div style="display: flex; gap: 14px; align-items: center; margin-bottom: 10px;">
+            <img id="new-offer-photo-preview" src="assets/images/promo-lunch.png" style="width: 80px; height: 65px; object-fit: cover; border-radius: 8px; border: 1px solid var(--admin-border);">
+            <div style="flex: 1;">
+              <input type="file" id="new-offer-file-picker" accept="image/*,video/mp4" style="display: none;" onchange="onNewOfferPhotoFile(event)">
+              <button type="button" onclick="document.getElementById('new-offer-file-picker').click()" class="btn-action-gold" style="width: 100%; justify-content: center; padding: 8px; background: #2563eb; color: #fff; font-size: 0.82rem;">
+                📁 Загрузить с устройства
+              </button>
+            </div>
+          </div>
+
+          <input type="text" id="new-offer-photo-url" class="admin-input-dark" placeholder="Или ссылка / путь (assets/images/...)" oninput="onNewOfferPhotoUrl(this.value)" style="margin-bottom: 0; font-size: 0.84rem;">
+        </div>
+
+        <div style="display: flex; gap: 12px;">
+          <button type="submit" class="btn-action-gold" style="flex: 1; justify-content: center; padding: 12px; font-size: 0.95rem;">
+            ✓ Добавить предложение
+          </button>
+          <button type="button" onclick="closeAddOfferModal()" class="admin-logout-btn" style="padding: 12px 18px; border-radius: 20px;">
+            Отмена
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script src="js/main.js"></script>
   <script>
     const AUTH_PASS = 'saperavi2024';
@@ -741,7 +797,7 @@
       document.getElementById('admin-dashboard').style.display = 'block';
       loadLocalData();
       renderDishesTable();
-      initCloudSettings();
+      renderAdminOffersGrid();
     }
 
     function logoutAdmin() {
@@ -756,6 +812,9 @@
       const pane = document.getElementById('tab-' + tabId);
       if (pane) pane.style.display = 'block';
       if (btn) btn.classList.add('active');
+
+      if (tabId === 'dishes') renderDishesTable();
+      if (tabId === 'lunches') renderAdminOffersGrid();
     }
 
     function renderDishesTable() {
@@ -775,15 +834,6 @@
           </td>
           <td>
             <input type="text" class="table-input" value="${escapeHtml(dish.title)}" onchange="updateDishField(${idx}, 'title', this.value)">
-          </td>
-          <td>
-            <select class="table-input" onchange="updateDishField(${idx}, 'category', this.value)">
-              <option value="khinkali" ${dish.category === 'khinkali' ? 'selected' : ''}>Хинкали</option>
-              <option value="khachapuri" ${dish.category === 'khachapuri' ? 'selected' : ''}>Хачапури</option>
-              <option value="hot" ${dish.category === 'hot' ? 'selected' : ''}>Горячее и Гриль</option>
-              <option value="soups" ${dish.category === 'soups' ? 'selected' : ''}>Супы</option>
-              <option value="salads" ${dish.category === 'salads' ? 'selected' : ''}>Салаты и Закуски</option>
-            </select>
           </td>
           <td>
             <input type="number" class="table-input" value="${dish.price}" style="width: 80px;" onchange="updateDishField(${idx}, 'price', parseInt(this.value, 10))">
@@ -879,20 +929,11 @@
     function submitNewDishForm(e) {
       e.preventDefault();
       const title = document.getElementById('new-dish-title').value.trim();
-      const category = document.getElementById('new-dish-category').value;
       const price = parseInt(document.getElementById('new-dish-price').value, 10) || 0;
       const hasPrefix = document.getElementById('new-dish-price-prefix').checked;
       const weight = document.getElementById('new-dish-weight').value.trim() || '300 г';
       const desc = document.getElementById('new-dish-desc').value.trim() || 'Традиционное грузинское блюдо.';
       const badgeType = document.getElementById('new-dish-badge').value;
-
-      const catNames = {
-        khinkali: 'Хачапури и хинкали',
-        khachapuri: 'Хачапури и хинкали',
-        hot: 'Горячие блюда',
-        soups: 'Супы',
-        salads: 'Салаты и Закуски'
-      };
 
       const badgeTitles = {
         hit: 'ХИТ',
@@ -904,8 +945,8 @@
       const newDish = {
         id: 'dish-' + Date.now(),
         title,
-        category,
-        categoryName: catNames[category] || 'Горячие блюда',
+        category: 'hot',
+        categoryName: 'Горячие блюда',
         price,
         weight,
         desc,
@@ -924,86 +965,244 @@
       closeAddDishModal();
     }
 
-    function initCloudSettings() {
-      const urlInput = document.getElementById('redis-url-field');
-      const tokenInput = document.getElementById('redis-token-field');
+    /* УПРАВЛЕНИЕ ЛАНЧАМИ И ЗАВТРАКАМИ (MEAL OFFERS) */
+    function renderAdminOffersGrid() {
+      const grid = document.getElementById('admin-offers-grid');
+      if (!grid) return;
 
-      if (AppState.cloudConfig.restUrl) urlInput.value = AppState.cloudConfig.restUrl;
-      if (AppState.cloudConfig.restToken) tokenInput.value = AppState.cloudConfig.restToken;
-    }
-
-    async function testAndSaveRedis() {
-      const url = document.getElementById('redis-url-field').value.trim();
-      const token = document.getElementById('redis-token-field').value.trim();
-      const resEl = document.getElementById('redis-test-result');
-
-      if (!url || !token) {
-        resEl.innerHTML = '<span style="color: #f87171;">Введите URL и Token!</span>';
+      const offers = AppState.mealOffers || [];
+      if (offers.length === 0) {
+        grid.innerHTML = '<p style="color: rgba(255,255,255,0.6); grid-column: 1/-1;">Список предложений пуст. Нажмите «+ Добавить спецпредложение».</p>';
         return;
       }
 
-      resEl.innerHTML = '<span style="color: #dcb360;">Проверка соединения с Redis...</span>';
+      grid.innerHTML = offers.map((offer, idx) => {
+        const isVideo = offer.isVideo || (offer.image && (offer.image.endsWith('.mp4') || offer.image.includes('mp4')));
+        const previewEl = isVideo
+          ? `<video src="${offer.image}" autoplay muted loop playsinline class="meal-photo" poster="${offer.poster || 'assets/images/adyghe-cheese.jpg'}" style="width: 100%; height: 160px; object-fit: cover; border-radius: 10px;"></video>`
+          : `<img src="${offer.image}" alt="${escapeHtml(offer.title)}" style="width: 100%; height: 160px; object-fit: cover; border-radius: 10px;" onerror="this.src='assets/images/brand-card.jpg'">`;
 
-      try {
-        const res = await fetch(`${url.replace(/\/$/, '')}/ping`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        return `
+          <div class="admin-panel-card" style="background: #19050a; border: 1px solid var(--admin-border); margin-bottom: 0;">
+            <div style="position: relative; margin-bottom: 12px;">
+              ${previewEl}
+              <button onclick="openOfferPhotoModal(${idx})" class="btn-action-gold" style="position: absolute; bottom: 8px; right: 8px; padding: 6px 12px; font-size: 0.75rem; background: rgba(0,0,0,0.8); color: #fff; border: 1px solid var(--admin-gold);">
+                📷 Сменить фото/видео
+              </button>
+            </div>
 
-        if (res.ok) {
-          const data = await res.json();
-          if (data.result === 'PONG') {
-            AppState.cloudConfig.enabled = true;
-            AppState.cloudConfig.restUrl = url;
-            AppState.cloudConfig.restToken = token;
-            await saveData();
-            initCloudSettings();
-            resEl.innerHTML = '<span style="color: #4ade80;">✓ Соединение успешно (PONG)! Настройки сохранены.</span>';
-            return;
-          }
+            <div style="margin-bottom: 10px;">
+              <label style="display: block; font-size: 0.76rem; color: var(--admin-gold); margin-bottom: 4px;">Заголовок карточки:</label>
+              <input type="text" class="table-input" value="${escapeHtml(offer.title)}" onchange="updateOfferField(${idx}, 'title', this.value)">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+              <div>
+                <label style="display: block; font-size: 0.76rem; color: var(--admin-gold); margin-bottom: 4px;">Бейджик / плашка:</label>
+                <input type="text" class="table-input" value="${escapeHtml(offer.badge || '')}" onchange="updateOfferField(${idx}, 'badge', this.value)">
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.76rem; color: var(--admin-gold); margin-bottom: 4px;">Время:</label>
+                <input type="text" class="table-input" value="${escapeHtml(offer.timeHint || '')}" onchange="updateOfferField(${idx}, 'timeHint', this.value)">
+              </div>
+            </div>
+
+            <div style="margin-bottom: 10px;">
+              <label style="display: block; font-size: 0.76rem; color: var(--admin-gold); margin-bottom: 4px;">Описание:</label>
+              <textarea class="table-input" rows="3" onchange="updateOfferField(${idx}, 'desc', this.value)">${escapeHtml(offer.desc || '')}</textarea>
+            </div>
+
+            <div style="margin-bottom: 14px;">
+              <label style="display: block; font-size: 0.76rem; color: var(--admin-gold); margin-bottom: 4px;">Текст кнопки брони:</label>
+              <input type="text" class="table-input" value="${escapeHtml(offer.buttonText || 'Забронировать')}" onchange="updateOfferField(${idx}, 'buttonText', this.value)">
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.78rem; color: #4ade80;">✓ Сохраняется сразу</span>
+              <button onclick="deleteOffer(${idx})" class="btn-del-row" style="padding: 6px 14px;">
+                🗑️ Удалить карточку
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateOfferField(idx, field, value) {
+      if (AppState.mealOffers && AppState.mealOffers[idx]) {
+        AppState.mealOffers[idx][field] = value;
+        saveData();
+      }
+    }
+
+    function deleteOffer(idx) {
+      if (confirm(`Удалить предложение «${AppState.mealOffers[idx].title}»?`)) {
+        AppState.mealOffers.splice(idx, 1);
+        saveData();
+        renderAdminOffersGrid();
+      }
+    }
+
+    let newOfferPhotoData = 'assets/images/promo-lunch.png';
+    function openAddOfferModal() {
+      newOfferPhotoData = 'assets/images/promo-lunch.png';
+      document.getElementById('add-offer-form').reset();
+      document.getElementById('new-offer-photo-preview').src = newOfferPhotoData;
+      document.getElementById('new-offer-photo-url').value = '';
+      document.getElementById('add-offer-modal').style.display = 'flex';
+    }
+
+    function closeAddOfferModal() {
+      document.getElementById('add-offer-modal').style.display = 'none';
+    }
+
+    function onNewOfferPhotoUrl(val) {
+      newOfferPhotoData = val.trim() || 'assets/images/promo-lunch.png';
+      document.getElementById('new-offer-photo-preview').src = newOfferPhotoData;
+    }
+
+    function onNewOfferPhotoFile(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        if (file.type.startsWith('image/')) {
+          const img = new Image();
+          img.onload = function() {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            const MAX_SIZE = 800;
+            if (width > height) {
+              if (width > MAX_SIZE) {
+                height *= MAX_SIZE / width;
+                width = MAX_SIZE;
+              }
+            } else {
+              if (height > MAX_SIZE) {
+                width *= MAX_SIZE / height;
+                height = MAX_SIZE;
+              }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressed = canvas.toDataURL('image/jpeg', 0.85);
+            newOfferPhotoData = compressed;
+            document.getElementById('new-offer-photo-preview').src = compressed;
+            document.getElementById('new-offer-photo-url').value = '(Загружено с устройства)';
+          };
+          img.src = evt.target.result;
+        } else {
+          newOfferPhotoData = evt.target.result;
+          document.getElementById('new-offer-photo-url').value = '(Видео загружено с устройства)';
         }
-        resEl.innerHTML = '<span style="color: #f87171;">Ошибка: Redis вернул некорректный ответ. Проверьте токен.</span>';
-      } catch (e) {
-        resEl.innerHTML = `<span style="color: #f87171;">Ошибка сети: ${e.message}</span>`;
+      };
+      reader.readAsDataURL(file);
+      e.target.value = '';
+    }
+
+    function submitNewOfferForm(e) {
+      e.preventDefault();
+      const title = document.getElementById('new-offer-title').value.trim();
+      const badge = document.getElementById('new-offer-badge').value.trim();
+      const timeHint = document.getElementById('new-offer-time').value.trim();
+      const desc = document.getElementById('new-offer-desc').value.trim();
+      const buttonText = document.getElementById('new-offer-btn-text').value.trim() || 'Забронировать';
+
+      if (!AppState.mealOffers) AppState.mealOffers = [];
+
+      const newOffer = {
+        id: 'offer-' + Date.now(),
+        title,
+        badge,
+        timeHint,
+        desc,
+        image: newOfferPhotoData || 'assets/images/promo-lunch.png',
+        buttonText,
+        modalGoal: title
+      };
+
+      AppState.mealOffers.push(newOffer);
+      saveData();
+      renderAdminOffersGrid();
+      closeAddOfferModal();
+    }
+
+    function openOfferPhotoModal(idx) {
+      const offer = AppState.mealOffers[idx];
+      if (!offer) return;
+      
+      const newUrl = prompt('Введите ссылку/путь на фото или видео (например, assets/images/promo-lunch.png):', offer.image);
+      if (newUrl !== null && newUrl.trim()) {
+        offer.image = newUrl.trim();
+        saveData();
+        renderAdminOffersGrid();
       }
     }
 
-    async function forceSyncToCloud() {
-      const resEl = document.getElementById('redis-test-result');
-      resEl.innerHTML = '<span style="color: #dcb360;">Отправка меню в Redis...</span>';
-      const ok = await saveToCloudRedis();
-      if (ok) {
-        resEl.innerHTML = '<span style="color: #4ade80;">✓ Меню успешно выгружено в Redis!</span>';
-      } else {
-        resEl.innerHTML = '<span style="color: #f87171;">Ошибка отправки. Проверьте подключение.</span>';
-      }
-    }
+    /* ЭКСПОРТ И ИМПОРТ БАЗЫ ДАННЫХ (С ПОЛНЫМИ ФОТОГРАФИЯМИ BASE64) */
+    async function exportMenuJsonFile() {
+      const statusEl = document.getElementById('import-status-msg');
+      if (statusEl) statusEl.innerHTML = '<span style="color: #dcb360;">Подготовка полной базы со всеми фото в Base64...</span>';
 
-    async function forceSyncFromCloud() {
-      const resEl = document.getElementById('redis-test-result');
-      resEl.innerHTML = '<span style="color: #dcb360;">Загрузка меню из Redis...</span>';
-      await syncFromCloudRedis();
-      renderDishesTable();
-      resEl.innerHTML = '<span style="color: #4ade80;">✓ Меню успешно загружено из Redis!</span>';
-    }
+      const menuWithBase64 = await Promise.all(AppState.menu.map(async (dish) => {
+        const copy = { ...dish };
+        if (copy.image && !copy.image.startsWith('data:')) {
+          const b64 = await imagePathToBase64(copy.image);
+          if (b64) copy.image = b64;
+        }
+        return copy;
+      }));
 
-    function exportMenuJsonFile() {
+      const offersWithBase64 = await Promise.all((AppState.mealOffers || []).map(async (offer) => {
+        const copy = { ...offer };
+        if (copy.image && !copy.image.startsWith('data:') && !copy.image.endsWith('.mp4')) {
+          const b64 = await imagePathToBase64(copy.image);
+          if (b64) copy.image = b64;
+        }
+        return copy;
+      }));
+
       const exportObject = {
         exportedAt: new Date().toISOString(),
-        version: "saperavi_v1",
-        menu: AppState.menu,
+        version: "saperavi_full_v2",
+        menu: menuWithBase64,
+        mealOffers: offersWithBase64,
         lunch: AppState.lunch
       };
+
       const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObject, null, 2));
       const dlAnchor = document.createElement('a');
       dlAnchor.setAttribute("href", dataStr);
-      dlAnchor.setAttribute("download", `saperavi-db-${new Date().toISOString().slice(0,10)}.json`);
+      dlAnchor.setAttribute("download", `saperavi-full-db-${new Date().toISOString().slice(0,10)}.json`);
       dlAnchor.click();
+
+      if (statusEl) statusEl.innerHTML = '<span style="color: #4ade80;">✓ Полная база данных со всеми фото успешно скачана!</span>';
+    }
+
+    async function imagePathToBase64(src) {
+      try {
+        const res = await fetch(src);
+        if (!res.ok) return null;
+        const blob = await res.blob();
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.readAsDataURL(blob);
+        });
+      } catch (e) {
+        return null;
+      }
     }
 
     function copyDbJsonToClipboard() {
       const exportObject = {
         exportedAt: new Date().toISOString(),
         menu: AppState.menu,
+        mealOffers: AppState.mealOffers,
         lunch: AppState.lunch
       };
       const text = JSON.stringify(exportObject, null, 2);
@@ -1045,28 +1244,32 @@
       try {
         const parsed = JSON.parse(rawJson);
         let importedMenu = null;
+        let importedOffers = null;
         let importedLunch = null;
 
         if (Array.isArray(parsed)) {
           importedMenu = parsed;
-        } else if (parsed && Array.isArray(parsed.menu)) {
-          importedMenu = parsed.menu;
+        } else if (parsed && typeof parsed === 'object') {
+          if (Array.isArray(parsed.menu)) importedMenu = parsed.menu;
+          if (Array.isArray(parsed.mealOffers)) importedOffers = parsed.mealOffers;
           if (parsed.lunch) importedLunch = parsed.lunch;
-        } else {
-          throw new Error('В файле/тексте не найден массив блюд.');
         }
 
-        if (importedMenu.length === 0) {
-          throw new Error('Список блюд пуст.');
+        if (!importedMenu || importedMenu.length === 0) {
+          throw new Error('В файле/тексте не найден список блюд.');
         }
 
         AppState.menu = importedMenu;
+        if (importedOffers && importedOffers.length > 0) {
+          AppState.mealOffers = importedOffers;
+        }
         if (importedLunch) AppState.lunch = importedLunch;
 
         await saveData();
         renderDishesTable();
+        renderAdminOffersGrid();
 
-        showImportStatus(`✓ Успешно импортировано блюд: ${importedMenu.length}! Данные сохранены и отправлены в Redis.`, true);
+        showImportStatus(`✓ Успешно импортировано блюд: ${importedMenu.length}, спецпредложений: ${AppState.mealOffers ? AppState.mealOffers.length : 0}! Данные сохранены и отправлены в Redis.`, true);
       } catch (err) {
         showImportStatus(`❌ Ошибка импорта: ${err.message}. Проверьте правильность формата JSON.`, false);
       }
@@ -1081,9 +1284,11 @@
     function resetMenuToFactoryDefaults() {
       if (confirm('Сбросить меню к первоначальным стандартным блюдам ресторана (10 блюд)?')) {
         AppState.menu = [...DEFAULT_MENU_DATA];
+        AppState.mealOffers = [...DEFAULT_MEAL_OFFERS];
         saveData();
         renderDishesTable();
-        alert('Меню сброшено к стандартному и сохранено в базе!');
+        renderAdminOffersGrid();
+        alert('Меню и спецпредложения сброшены к стандартным и сохранены в базе!');
       }
     }
 

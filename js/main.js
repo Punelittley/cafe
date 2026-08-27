@@ -139,6 +139,32 @@ const DEFAULT_MENU_DATA = [
   }
 ];
 
+const DEFAULT_MEAL_OFFERS = [
+  {
+    id: 'business-lunch',
+    title: 'Бизнес-ланчи и обеды',
+    badge: '-15% в будни с 12:00 до 16:00',
+    timeHint: 'Понедельник — Пятница • 12:00 – 16:00',
+    desc: 'Скидка 15% на всё основное меню по будням с 12:00 до 16:00. Вкусные домашние грузинские блюда в самом центре города.',
+    image: 'assets/images/promo-lunch.png',
+    isVideo: false,
+    buttonText: 'Забронировать столик на обед',
+    modalGoal: 'Столик на ланч'
+  },
+  {
+    id: 'georgian-breakfast',
+    title: 'Грузинские Завтраки',
+    badge: 'С 10:00 в будни • С 12:00 в выходные',
+    timeHint: 'Утреннее меню',
+    desc: 'Свежая выпечка из печи, сырные блюда, авторские хачапури, свежесваренный кофе и кавказский чай.',
+    image: 'assets/images/IMG_9688.mp4',
+    poster: 'assets/images/adyghe-cheese.jpg',
+    isVideo: true,
+    buttonText: 'Прийти на завтрак',
+    modalGoal: 'Столик на завтрак'
+  }
+];
+
 const DEFAULT_LUNCH_INFO = {
   activeWeek: 'Текущая неделя (Пн–Пт, 12:00 – 16:00)',
   discountText: '-15% на основное меню по будням',
@@ -160,6 +186,7 @@ const DEFAULT_CLOUD_CONFIG = {
 const AppState = {
   menu: [],
   lunch: {},
+  mealOffers: [],
   cloudConfig: { ...DEFAULT_CLOUD_CONFIG },
   currentCategory: 'all',
   searchQuery: '',
@@ -171,6 +198,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initNavbar();
   initOpenStatus();
   initMenuRenderer();
+  renderMealOffers();
   initBookingModal();
   initLightbox();
   initEventSlider();
@@ -243,16 +271,25 @@ function loadLocalData() {
 
     const savedLunch = localStorage.getItem('saperavi_lunch_info');
     AppState.lunch = savedLunch ? JSON.parse(savedLunch) : { ...DEFAULT_LUNCH_INFO };
+
+    const savedOffers = localStorage.getItem('saperavi_meal_offers');
+    if (savedOffers) {
+      AppState.mealOffers = JSON.parse(savedOffers);
+    } else {
+      AppState.mealOffers = [...DEFAULT_MEAL_OFFERS];
+    }
   } catch (e) {
     console.error('Ошибка загрузки локальных данных:', e);
     AppState.menu = [...DEFAULT_MENU_DATA];
     AppState.lunch = { ...DEFAULT_LUNCH_INFO };
+    AppState.mealOffers = [...DEFAULT_MEAL_OFFERS];
   }
 }
 
 async function saveData() {
   try {
     localStorage.setItem('saperavi_menu_data', JSON.stringify(AppState.menu));
+    localStorage.setItem('saperavi_meal_offers', JSON.stringify(AppState.mealOffers));
     localStorage.setItem('saperavi_lunch_info', JSON.stringify(AppState.lunch));
     localStorage.setItem('saperavi_cloud_config', JSON.stringify(AppState.cloudConfig));
 
@@ -280,22 +317,25 @@ async function syncFromCloudRedis() {
     if (res.ok) {
       const data = await res.json();
       if (data && data.result) {
-        let cloudMenu = typeof data.result === 'string' ? JSON.parse(data.result) : data.result;
-        if (Array.isArray(cloudMenu) && cloudMenu.length === 1 && typeof cloudMenu[0] === 'string') {
-          cloudMenu = JSON.parse(cloudMenu[0]);
+        let cloudData = typeof data.result === 'string' ? JSON.parse(data.result) : data.result;
+        if (Array.isArray(cloudData) && cloudData.length === 1 && typeof cloudData[0] === 'string') {
+          cloudData = JSON.parse(cloudData[0]);
         }
-        if (Array.isArray(cloudMenu) && cloudMenu.length > 0) {
-          const hasLegacy = cloudMenu.some(item => item.id === 'shashlik-pork' || item.id === 'borsh-trad' || item.id === 'pork-loin');
-          if (hasLegacy) {
-            console.log('Purging legacy dishes from cloud Redis...');
-            AppState.menu = [...DEFAULT_MENU_DATA];
-            await saveToCloudRedis();
-          } else {
-            AppState.menu = cloudMenu;
+
+        if (Array.isArray(cloudData)) {
+          // Standard menu array
+          AppState.menu = cloudData.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad' && item.id !== 'pork-loin');
+        } else if (cloudData && Array.isArray(cloudData.menu)) {
+          AppState.menu = cloudData.menu.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad' && item.id !== 'pork-loin');
+          if (Array.isArray(cloudData.mealOffers)) {
+            AppState.mealOffers = cloudData.mealOffers;
+            localStorage.setItem('saperavi_meal_offers', JSON.stringify(AppState.mealOffers));
+            renderMealOffers();
           }
-          localStorage.setItem('saperavi_menu_data', JSON.stringify(AppState.menu));
-          if (window.refreshMenuGrid) window.refreshMenuGrid();
         }
+
+        localStorage.setItem('saperavi_menu_data', JSON.stringify(AppState.menu));
+        if (window.refreshMenuGrid) window.refreshMenuGrid();
       }
     }
   } catch (err) {
@@ -307,6 +347,11 @@ async function saveToCloudRedis() {
   if (!AppState.cloudConfig.restUrl || !AppState.cloudConfig.restToken) return false;
 
   try {
+    const bundle = {
+      menu: AppState.menu,
+      mealOffers: AppState.mealOffers,
+      lunch: AppState.lunch
+    };
     const url = `${AppState.cloudConfig.restUrl.replace(/\/$/, '')}/set/saperavi_menu_data`;
     const res = await fetch(url, {
       method: 'POST',
@@ -314,7 +359,7 @@ async function saveToCloudRedis() {
         Authorization: `Bearer ${AppState.cloudConfig.restToken}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(AppState.menu)
+      body: JSON.stringify(bundle)
     });
 
     return res.ok;
@@ -322,6 +367,38 @@ async function saveToCloudRedis() {
     console.error('Ошибка отправки в Redis:', e);
     return false;
   }
+}
+
+function renderMealOffers() {
+  const container = document.getElementById('meal-offers-container');
+  if (!container) return;
+  const offers = (AppState.mealOffers && AppState.mealOffers.length > 0) ? AppState.mealOffers : DEFAULT_MEAL_OFFERS;
+
+  container.innerHTML = offers.map((offer) => {
+    const isVideo = offer.isVideo || (offer.image && (offer.image.endsWith('.mp4') || offer.image.includes('mp4')));
+    const mediaHtml = isVideo
+      ? `<video src="${offer.image}" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback class="meal-photo" poster="${offer.poster || 'assets/images/adyghe-cheese.jpg'}" style="width: 100%; height: 100%; object-fit: cover;"></video>`
+      : `<img src="${offer.image}" alt="${escapeHtml(offer.title)}" class="meal-photo" onerror="this.src='assets/images/brand-card.jpg'">`;
+
+    return `
+      <div class="meal-set-card">
+        <div class="meal-photo-wrap">
+          ${mediaHtml}
+          ${offer.badge ? `<div class="meal-tag-ribbon">${escapeHtml(offer.badge)}</div>` : ''}
+        </div>
+        <div class="meal-body-content">
+          ${offer.timeHint ? `<span class="meal-time-hint">${escapeHtml(offer.timeHint)}</span>` : ''}
+          <h3 class="meal-title-text">${escapeHtml(offer.title)}</h3>
+          <p style="font-size: 0.92rem; color: var(--c-text-muted); margin-bottom: 24px; line-height: 1.6;">
+            ${escapeHtml(offer.desc)}
+          </p>
+          <button class="btn btn-wine" onclick="openBookingModal('${escapeHtml(offer.modalGoal || offer.title)}', 'Бронь столика: ${escapeHtml(offer.title)}')">
+            ${escapeHtml(offer.buttonText || 'Забронировать')}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
 
 function initNavbar() {
