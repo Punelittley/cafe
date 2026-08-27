@@ -96,19 +96,6 @@ const DEFAULT_MENU_DATA = [
     badge: 'НА ГРИЛЕ',
     badgeType: 'leader'
   },
-  {
-    id: 'pork-loin',
-    title: 'Свиная корейка гриль с жареным картофелем по-домашнему',
-    category: 'hot',
-    categoryName: 'Горячие блюда',
-    price: 350,
-    pricePrefix: 'от',
-    weight: 'за 100 г / картофель 250 ₽',
-    desc: 'Ароматная свиная корейка на кости, приготовленная на гриле, подается с золотистым домашним жареным картофелем с луком и зеленью.',
-    image: 'assets/images/pork-loin.jpg',
-    badge: 'НОВИНКА',
-    badgeType: 'new'
-  },
 
   // Супы
   {
@@ -221,7 +208,7 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v22_prices_from_prefix';
+    const MENU_VERSION = 'v23_remove_pork_loin';
 
     const savedCloud = localStorage.getItem('saperavi_cloud_config');
     if (savedCloud) {
@@ -238,7 +225,7 @@ function loadLocalData() {
       const parsed = JSON.parse(savedMenu);
       if (Array.isArray(parsed) && parsed.length > 0) {
         // Ensure no legacy dishes leaked into local cache
-        AppState.menu = parsed.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad');
+        AppState.menu = parsed.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad' && item.id !== 'pork-loin');
       } else {
         AppState.menu = [...DEFAULT_MENU_DATA];
       }
@@ -298,7 +285,7 @@ async function syncFromCloudRedis() {
           cloudMenu = JSON.parse(cloudMenu[0]);
         }
         if (Array.isArray(cloudMenu) && cloudMenu.length > 0) {
-          const hasLegacy = cloudMenu.some(item => item.id === 'shashlik-pork' || item.id === 'borsh-trad');
+          const hasLegacy = cloudMenu.some(item => item.id === 'shashlik-pork' || item.id === 'borsh-trad' || item.id === 'pork-loin');
           if (hasLegacy) {
             console.log('Purging legacy dishes from cloud Redis...');
             AppState.menu = [...DEFAULT_MENU_DATA];
