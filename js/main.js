@@ -1,12 +1,7 @@
-/**
- * Грузинское кафе «Счастье Саперави» (г. Пермь)
- * Главный скрипт: фотоменю, фильтрация по категориям, админка и синхронизация с Redis
- */
 
-// Базовые данные меню по умолчанию с богатым выбором для всех категорий
-// Базовые данные меню по умолчанию в стиле референса
+
 const DEFAULT_MENU_DATA = [
-  // Хачапури и Хинкали
+  
   {
     id: 'khinkali-tel-svin',
     title: 'Хинкали с телятиной и свининой',
@@ -56,7 +51,6 @@ const DEFAULT_MENU_DATA = [
     badgeType: 'new'
   },
 
-  // Горячие блюда и Гриль
   {
     id: 'chicken-tapaka',
     title: 'Цыпленок Тапака',
@@ -97,7 +91,6 @@ const DEFAULT_MENU_DATA = [
     badgeType: 'leader'
   },
 
-  // Супы
   {
     id: 'kharcho-veal',
     title: 'Харчо',
@@ -111,8 +104,6 @@ const DEFAULT_MENU_DATA = [
     badgeType: 'gold'
   },
 
-
-  // Холодные закуски и Салаты
   {
     id: 'salmon-salad',
     title: 'Салат «Лосось слабой соли»',
@@ -252,7 +243,7 @@ function loadLocalData() {
     if (savedMenu && savedVersion === MENU_VERSION) {
       const parsed = JSON.parse(savedMenu);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        // Ensure no legacy dishes leaked into local cache
+        
         AppState.menu = parsed.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad' && item.id !== 'pork-loin');
       } else {
         AppState.menu = [...DEFAULT_MENU_DATA];
@@ -261,7 +252,7 @@ function loadLocalData() {
       AppState.menu = [...DEFAULT_MENU_DATA];
       localStorage.setItem('saperavi_menu_data', JSON.stringify(AppState.menu));
       localStorage.setItem('saperavi_menu_version', MENU_VERSION);
-      // Immediately overwrite cloud database with clean defaults
+      
       setTimeout(() => {
         if (AppState.cloudConfig && AppState.cloudConfig.enabled) {
           saveToCloudRedis().then(() => console.log('Defaults synced to cloud after version bump'));
@@ -323,7 +314,7 @@ async function syncFromCloudRedis() {
         }
 
         if (Array.isArray(cloudData)) {
-          // Standard menu array
+          
           AppState.menu = cloudData.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad' && item.id !== 'pork-loin');
         } else if (cloudData && Array.isArray(cloudData.menu)) {
           AppState.menu = cloudData.menu.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad' && item.id !== 'pork-loin');
@@ -438,7 +429,6 @@ function initNavbar() {
   }
 }
 
-// Глобальная функция фильтрации по категории для 100% надежности клика
 window.setMenuCategory = function(cat, btnEl) {
   AppState.currentCategory = cat || 'all';
 

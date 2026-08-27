@@ -1,6 +1,4 @@
-/* ==========================================================================
-   Кафе «Счастье Саперави» — Премиальный ресторанный дизайн
-   ========================================================================== */
+
 
 :root {
   --c-wine-950: #070103;
@@ -46,7 +44,6 @@
   --trans: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
 }
 
-/* Reset */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -108,9 +105,6 @@ button, input, select, textarea {
   padding: 0 24px;
 }
 
-/* ==========================================================================
-   Header (Белый премиальный хедер с крупным логотипом по центру)
-   ========================================================================== */
 .site-navbar {
   position: sticky;
   top: 0;
@@ -136,7 +130,6 @@ button, input, select, textarea {
   height: 92px;
 }
 
-/* Левая колонка навигации */
 .nav-left-col {
   display: flex;
   align-items: center;
@@ -162,7 +155,6 @@ button, input, select, textarea {
   color: var(--c-gold-600);
 }
 
-/* Центральный логотип */
 .brand-center-wrapper {
   display: flex;
   align-items: center;
@@ -180,7 +172,6 @@ button, input, select, textarea {
   opacity: 0.88;
 }
 
-/* Правая колонка действий */
 .nav-right-actions {
   display: flex;
   align-items: center;
@@ -280,9 +271,6 @@ button, input, select, textarea {
   font-size: 1.4rem;
 }
 
-/* ==========================================================================
-   Hero Section
-   ========================================================================== */
 .hero-centerpiece-section {
   position: relative;
   background-color: var(--c-wine-950);
@@ -349,7 +337,6 @@ button, input, select, textarea {
   z-index: 12;
 }
 
-/* Элегантная анимация кнопок Hero (без поднятия / с золотым переливом и свечением) */
 .hero-bottom-actions .btn {
   position: relative;
   overflow: hidden;
@@ -360,7 +347,6 @@ button, input, select, textarea {
   z-index: 1;
 }
 
-/* Скользящий световой блик по диагонали */
 .hero-bottom-actions .btn::before {
   content: '';
   position: absolute;
@@ -386,7 +372,6 @@ button, input, select, textarea {
   transition: left 0.75s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.25s ease;
 }
 
-/* Кнопка "Смотреть меню" */
 .hero-bottom-actions .btn-gold-fill {
   background: linear-gradient(135deg, #e5ca89 0%, #c59f4e 50%, #9a762b 100%);
   color: #120306;
@@ -400,7 +385,6 @@ button, input, select, textarea {
   border-color: #ffffff;
 }
 
-/* Кнопки "О нашем кафе" и "293-55-38" */
 .hero-bottom-actions .btn-gold-outline {
   background: rgba(18, 3, 6, 0.6);
   color: var(--c-gold-300);
@@ -448,9 +432,6 @@ button, input, select, textarea {
   z-index: 5;
 }
 
-/* ==========================================================================
-   About Section
-   ========================================================================== */
 .about-story-section {
   padding: 80px 0;
   background: transparent;
@@ -542,9 +523,6 @@ button, input, select, textarea {
   filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.08));
 }
 
-/* ==========================================================================
-   Популярные категории с иконками
-   ========================================================================== */
 .categories-header-strip {
   text-align: center;
   margin-bottom: 32px;
@@ -651,9 +629,6 @@ button, input, select, textarea {
   background: var(--c-wine-700);
 }
 
-/* ==========================================================================
-   Section Headers & Typography
-   ========================================================================== */
 .site-section {
   padding: 80px 0;
   position: relative;
@@ -691,9 +666,6 @@ button, input, select, textarea {
   line-height: 1.6;
 }
 
-/* ==========================================================================
-   Menu Catalog Cards
-   ========================================================================== */
 .menu-search-bar-wrap {
   display: flex;
   justify-content: center;
@@ -794,7 +766,6 @@ button, input, select, textarea {
   transform: scale(1.04);
 }
 
-/* Бейджи поверх фото */
 .dish-badge-wrapper {
   position: absolute;
   top: 14px;
@@ -815,7 +786,6 @@ button, input, select, textarea {
   line-height: 1;
 }
 
-/* ХИТ (темно-бордовый с золотом) */
 .dish-tag-badge.badge-hit {
   background: #480c18;
   color: #ffffff;
@@ -827,14 +797,12 @@ button, input, select, textarea {
   color: #dcb360;
 }
 
-/* ЛИДЕР ПРОДАЖ (янтарно-золотой градиент) */
 .dish-tag-badge.badge-leader {
   background: linear-gradient(135deg, #d89f38 0%, #b87c1c 100%);
   color: #120306;
   border-radius: 20px;
 }
 
-/* НОВИНКА (насыщенный бордовый) */
 .dish-tag-badge.badge-new {
   background: #360710;
   color: #ffffff;
@@ -846,7 +814,6 @@ button, input, select, textarea {
   color: #fca5a5;
 }
 
-/* ЗОЛОТОЙ */
 .dish-tag-badge.badge-gold {
   background: #1c050a;
   color: var(--c-gold-300);
@@ -854,7 +821,6 @@ button, input, select, textarea {
   border-radius: 20px;
 }
 
-/* Кнопка "Сердечко / Избранное" */
 .dish-fav-heart-btn {
   position: absolute;
   top: 14px;
@@ -891,7 +857,6 @@ button, input, select, textarea {
   fill: #ffffff;
 }
 
-/* Золотой волновой разделитель */
 .dish-wave-divider {
   position: absolute;
   bottom: -1px;
@@ -910,7 +875,6 @@ button, input, select, textarea {
   height: 36px;
 }
 
-/* Тело карточки */
 .dish-gastro-body {
   padding: 16px 22px 22px;
   display: flex;
@@ -985,7 +949,6 @@ button, input, select, textarea {
   stroke-width: 2;
 }
 
-/* Delivery Ribbon Bar */
 .delivery-ribbon-bar {
   margin-top: 40px;
   background: var(--c-wine-900);
@@ -1025,9 +988,6 @@ button, input, select, textarea {
   flex-wrap: wrap;
 }
 
-/* ==========================================================================
-   Lunches & Breakfasts
-   ========================================================================== */
 .two-cards-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1140,9 +1100,6 @@ button, input, select, textarea {
   color: var(--c-text-muted);
 }
 
-/* ==========================================================================
-   Премиальные баннеры акций (Чистые графические карточки без наложения текста)
-   ========================================================================== */
 .promos-banners-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1205,7 +1162,6 @@ button, input, select, textarea {
   color: #ffffff;
 }
 
-/* Event Gallery Slider */
 .events-slider-container {
   position: relative;
   width: 100%;
@@ -1293,7 +1249,6 @@ button, input, select, textarea {
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
-/* Arrows */
 .slider-arrow {
   position: absolute;
   top: 50%;
@@ -1328,7 +1283,6 @@ button, input, select, textarea {
   right: 20px;
 }
 
-/* Dots */
 .slider-dots {
   position: absolute;
   bottom: 20px;
@@ -1353,7 +1307,6 @@ button, input, select, textarea {
   transform: scale(1.25);
 }
 
-/* Capabilities list under slider */
 .events-capabilities-block {
   margin-top: 40px;
 }
@@ -1399,9 +1352,6 @@ button, input, select, textarea {
   margin-top: 24px;
 }
 
-/* ==========================================================================
-   Full Width Map & Direct Contact Section (Интерактивные большие карточки)
-   ========================================================================== */
 .contacts-map-section {
   padding: 90px 0 0;
   background: var(--c-paper-100);
@@ -1645,9 +1595,6 @@ button, input, select, textarea {
   border: 0;
 }
 
-/* ==========================================================================
-   Footer (Светлый премиальный футер)
-   ========================================================================== */
 .main-footer {
   background: #ffffff;
   color: var(--c-text-muted);
@@ -1725,9 +1672,6 @@ button, input, select, textarea {
   color: var(--c-gold-300);
 }
 
-/* ==========================================================================
-   Mobile Sticky Bar
-   ========================================================================== */
 .mobile-action-bar {
   display: none;
   position: fixed;
@@ -1766,9 +1710,6 @@ button, input, select, textarea {
   font-weight: 600;
 }
 
-/* ==========================================================================
-   Modals & Contact Hub
-   ========================================================================== */
 .modal-layer {
   position: fixed;
   inset: 0;
@@ -1830,7 +1771,6 @@ button, input, select, textarea {
   color: #ffffff;
 }
 
-/* Contact & Social Networks Hub Modal */
 .contact-hub-modal {
   max-width: 480px;
   padding: 32px 26px 26px;
@@ -1866,7 +1806,6 @@ button, input, select, textarea {
   margin-bottom: 0;
 }
 
-/* Телефоны прямого звонка */
 .modal-phones-block {
   display: flex;
   flex-direction: column;
@@ -1934,7 +1873,6 @@ button, input, select, textarea {
   line-height: 1.1;
 }
 
-/* Сетка соцсетей */
 .modal-socials-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2019,7 +1957,6 @@ button, input, select, textarea {
   border: 1px dashed var(--c-paper-300);
 }
 
-/* Lightbox */
 .lightbox-window {
   max-width: 880px;
   background: transparent;
@@ -2041,7 +1978,6 @@ button, input, select, textarea {
   font-size: 0.95rem;
 }
 
-/* Admin Panel */
 .admin-window-size {
   max-width: 800px;
 }
@@ -2097,9 +2033,6 @@ button, input, select, textarea {
   background: #ffffff;
 }
 
-/* ==========================================================================
-   Responsive
-   ========================================================================== */
 @media (max-width: 1100px) {
   .nav-links-list {
     gap: 14px;
@@ -2310,8 +2243,6 @@ button, input, select, textarea {
   .contacts-interactive-grid {
     grid-template-columns: 1fr;
   }
-
-
 
   .footer-columns-grid {
     grid-template-columns: 1fr;

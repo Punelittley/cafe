@@ -386,7 +386,6 @@
 </head>
 <body class="admin-body">
 
-  <!-- Экран Входа -->
   <div id="auth-screen">
     <div class="auth-overlay-box">
       <img src="assets/images/logo.png" alt="Счастье Саперави" class="auth-logo">
@@ -411,9 +410,8 @@
     </div>
   </div>
 
-  <!-- Главный Интерфейс Панели -->
   <div id="admin-dashboard" style="display: none;">
-    <!-- Верхняя панель -->
+    
     <header class="admin-header-bar">
       <div class="admin-brand-block">
         <img src="assets/images/logo.png" alt="Счастье Саперави" class="admin-logo-img">
@@ -433,9 +431,8 @@
       </div>
     </header>
 
-    <!-- Основной контейнер -->
     <div class="admin-content-container">
-      <!-- Вкладки навигации -->
+      
       <nav class="admin-nav-tabs">
         <button class="admin-tab active" onclick="switchTab('dishes', this)">
           🍽️ Меню блюд (<span id="dishes-count-badge">0</span>)
@@ -448,7 +445,6 @@
         </button>
       </nav>
 
-      <!-- ВКЛАДКА 1: МЕНЮ БЛЮД -->
       <div id="tab-dishes" class="tab-content-pane">
         <div class="admin-panel-card">
           <div class="panel-header-row">
@@ -478,14 +474,13 @@
                 </tr>
               </thead>
               <tbody id="dishes-tbody">
-                <!-- Заполняется динамически -->
+                
               </tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- ВКЛАДКА 2: ЛАНЧИ И ЗАВТРАКИ -->
       <div id="tab-lunches" class="tab-content-pane" style="display: none;">
         <div class="admin-panel-card">
           <div class="panel-header-row" style="margin-bottom: 20px;">
@@ -501,14 +496,11 @@
           </div>
 
           <div id="admin-offers-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
-            <!-- Заполняется динамически из AppState.mealOffers -->
+            
           </div>
         </div>
       </div>
 
-
-
-      <!-- ВКЛАДКА 4: РЕЗЕРВНЫЕ КОПИИ И ИМПОРТ/ЭКСПОРТ -->
       <div id="tab-backup" class="tab-content-pane" style="display: none;">
         <div class="admin-panel-card" style="margin-bottom: 24px;">
           <h2 class="panel-title" style="margin-bottom: 12px;">📥 Скачать (Экспорт) базу данных</h2>
@@ -564,7 +556,6 @@
     </div>
   </div>
 
-  <!-- Модальное окно смены фотографии блюда -->
   <div id="photo-change-modal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
     <div class="admin-panel-card" style="max-width: 460px; width: 100%; margin: auto; position: relative; border: 1px solid var(--admin-gold); box-shadow: 0 20px 50px rgba(0,0,0,0.8);">
       <button onclick="closePhotoChangeModal()" style="position: absolute; right: 16px; top: 16px; background: transparent; color: #fff; font-size: 1.3rem; cursor: pointer; line-height: 1;">✕</button>
@@ -603,7 +594,6 @@
     </div>
   </div>
 
-  <!-- Модальное окно добавления нового блюда -->
   <div id="add-dish-modal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 20px; overflow-y: auto;">
     <div class="admin-panel-card" style="max-width: 540px; width: 100%; margin: auto; position: relative; border: 1px solid var(--admin-gold); box-shadow: 0 20px 50px rgba(0,0,0,0.8); max-height: 90vh; overflow-y: auto;">
       <button onclick="closeAddDishModal()" style="position: absolute; right: 16px; top: 16px; background: transparent; color: #fff; font-size: 1.3rem; cursor: pointer; line-height: 1;">✕</button>
@@ -659,7 +649,6 @@
           <textarea id="new-dish-desc" class="admin-input-dark" rows="3" placeholder="Нежные кусочки мяса, маринованные в кавказских травах..." style="margin-bottom: 0;"></textarea>
         </div>
 
-        <!-- Фото нового блюда -->
         <div style="margin-bottom: 18px; padding: 14px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid rgba(220,190,124,0.2);">
           <label style="display: block; font-size: 0.84rem; color: var(--admin-gold); margin-bottom: 10px; font-weight: 600;">
             📷 Фотография блюда:
@@ -690,7 +679,6 @@
     </div>
   </div>
 
-  <!-- Модальное окно добавления спецпредложения / ланча / завтрака -->
   <div id="add-offer-modal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 9999; align-items: center; justify-content: center; padding: 20px; overflow-y: auto;">
     <div class="admin-panel-card" style="max-width: 520px; width: 100%; margin: auto; position: relative; border: 1px solid var(--admin-gold); box-shadow: 0 20px 50px rgba(0,0,0,0.8); max-height: 90vh; overflow-y: auto;">
       <button onclick="closeAddOfferModal()" style="position: absolute; right: 16px; top: 16px; background: transparent; color: #fff; font-size: 1.3rem; cursor: pointer; line-height: 1;">✕</button>
@@ -735,7 +723,6 @@
           <input type="text" id="new-offer-btn-text" class="admin-input-dark" placeholder="Забронировать столик" value="Забронировать столик" style="margin-bottom: 0;">
         </div>
 
-        <!-- Фото или видео предложения -->
         <div style="margin-bottom: 18px; padding: 14px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid rgba(220,190,124,0.2);">
           <label style="display: block; font-size: 0.84rem; color: var(--admin-gold); margin-bottom: 10px; font-weight: 600;">
             📷 Фото или Видео:
@@ -965,7 +952,6 @@
       closeAddDishModal();
     }
 
-    /* УПРАВЛЕНИЕ ЛАНЧАМИ И ЗАВТРАКАМИ (MEAL OFFERS) */
     function renderAdminOffersGrid() {
       const grid = document.getElementById('admin-offers-grid');
       if (!grid) return;
@@ -1143,7 +1129,6 @@
       }
     }
 
-    /* ЭКСПОРТ И ИМПОРТ БАЗЫ ДАННЫХ (С ПОЛНЫМИ ФОТОГРАФИЯМИ BASE64) */
     async function exportMenuJsonFile() {
       const statusEl = document.getElementById('import-status-msg');
       if (statusEl) statusEl.innerHTML = '<span style="color: #dcb360;">Подготовка полной базы со всеми фото в Base64...</span>';
@@ -1300,7 +1285,6 @@
       alert('Дневное предложение сохранено!');
     }
 
-    /* Управление фото блюда */
     let currentEditingPhotoDishIdx = null;
     let currentEditingPhotoUrl = '';
 
