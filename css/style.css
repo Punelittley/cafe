@@ -467,11 +467,11 @@ button, input, select, textarea {
 
 .about-label-tag {
   display: inline-block;
-  font-size: 0.76rem;
+  font-size: 0.84rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--c-wine-700);
-  font-weight: 700;
+  color: #9c6700;
+  font-weight: 800;
   margin-bottom: 12px;
 }
 
@@ -479,7 +479,7 @@ button, input, select, textarea {
   font-family: var(--font-heading);
   font-size: clamp(2.4rem, 4vw, 3.4rem);
   font-weight: 700;
-  color: var(--c-wine-900);
+  color: #140307;
   line-height: 1.12;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -487,35 +487,39 @@ button, input, select, textarea {
 }
 
 .about-story-desc {
-  font-size: 1rem;
-  color: var(--c-text-muted);
+  font-size: 1.05rem;
+  color: #1a0f0d;
+  font-weight: 500;
   line-height: 1.7;
-  max-width: 520px;
+  max-width: 540px;
   margin-bottom: 24px;
 }
 
 .about-script-phrase {
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: 1.8rem;
-  color: var(--c-wine-800);
+  font-size: 1.85rem;
+  font-weight: 600;
+  color: #4a0c17;
   margin-bottom: 28px;
   display: block;
 }
 
 .btn-about-action {
   background: transparent;
-  color: var(--c-wine-900);
-  border: 1px solid var(--c-wine-700);
-  padding: 11px 24px;
-  font-size: 0.82rem;
+  color: #1a060a;
+  border: 1.5px solid #4a0c17;
+  padding: 12px 28px;
+  font-size: 0.84rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  transition: var(--trans);
 }
 
 .btn-about-action:hover {
-  background: var(--c-wine-900);
+  background: #4a0c17;
   color: #ffffff;
 }
 
