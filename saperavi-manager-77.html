@@ -385,9 +385,6 @@
       </div>
 
       <div class="admin-top-actions">
-        <span id="cloud-header-status" class="status-badge-live offline">
-          ● Локальный режим
-        </span>
         <a href="index.html" target="_blank" class="admin-site-link">
           Открыть сайт ↗
         </a>
@@ -711,18 +708,9 @@
     function initCloudSettings() {
       const urlInput = document.getElementById('redis-url-field');
       const tokenInput = document.getElementById('redis-token-field');
-      const statusBadge = document.getElementById('cloud-header-status');
 
       if (AppState.cloudConfig.restUrl) urlInput.value = AppState.cloudConfig.restUrl;
       if (AppState.cloudConfig.restToken) tokenInput.value = AppState.cloudConfig.restToken;
-
-      if (AppState.cloudConfig.enabled && AppState.cloudConfig.restUrl) {
-        statusBadge.className = 'status-badge-live online';
-        statusBadge.textContent = '● Redis подключен';
-      } else {
-        statusBadge.className = 'status-badge-live offline';
-        statusBadge.textContent = '● Локальный режим';
-      }
     }
 
     async function testAndSaveRedis() {
