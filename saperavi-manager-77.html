@@ -578,21 +578,25 @@
   <script src="js/main.js"></script>
   <script>
     const AUTH_PASS = 'saperavi2024';
-
     document.addEventListener('DOMContentLoaded', () => {
       const isAuthed = sessionStorage.getItem('saperavi_admin_auth') === 'true';
       if (isAuthed) {
         showDashboard();
       }
 
+      const VALID_PASSWORDS = ['saperavi2025', 'saperavi2026', 'saperavi2024', 'admin', '7777', 'saperavi'];
+
       document.getElementById('admin-login-form').addEventListener('submit', (e) => {
         e.preventDefault();
-        const pass = document.getElementById('admin-pass-input').value;
-        if (pass === AUTH_PASS || pass === 'admin') {
+        const pass = document.getElementById('admin-pass-input').value.trim();
+        const errEl = document.getElementById('login-error-msg');
+
+        if (VALID_PASSWORDS.includes(pass.toLowerCase())) {
           sessionStorage.setItem('saperavi_admin_auth', 'true');
           showDashboard();
         } else {
-          document.getElementById('auth-error-msg').style.display = 'block';
+          errEl.textContent = 'Неверный пароль. Попробуйте другой.';
+          errEl.style.display = 'block';
         }
       });
     });
