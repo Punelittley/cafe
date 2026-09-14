@@ -156,6 +156,15 @@ const DEFAULT_MEAL_OFFERS = [
   }
 ];
 
+const DEFAULT_SLIDER_PHOTOS = [
+  { id: 'slide-1', image: 'assets/images/gallery-events-toasts.jpg', caption: 'Банкетное застолье и душевные тосты' },
+  { id: 'slide-2', image: 'assets/images/gallery-events-table-decor.jpg', caption: 'Праздничная сервировка и хрустальный декор столов' },
+  { id: 'slide-3', image: 'assets/images/gallery-events-wedding-stairs.jpg', caption: 'Свадебное торжество в кафе' },
+  { id: 'slide-4', image: 'assets/images/gallery-events-cake.jpg', caption: 'Праздничный торт и задувание свечей' },
+  { id: 'slide-5', image: 'assets/images/gallery-events-welcome.jpg', caption: 'Свадебный велком-дринк и праздничный фуршет' },
+  { id: 'slide-6', image: 'assets/images/gallery-events-champagne.jpg', caption: 'Игристое и праздничная сервировка' }
+];
+
 const DEFAULT_LUNCH_INFO = {
   activeWeek: 'Текущая неделя (Пн–Пт, 12:00 – 16:00)',
   discountText: '-15% на основное меню по будням',
@@ -178,6 +187,7 @@ const AppState = {
   menu: [],
   lunch: {},
   mealOffers: [],
+  sliderPhotos: [],
   cloudConfig: { ...DEFAULT_CLOUD_CONFIG },
   currentCategory: 'all',
   searchQuery: '',
@@ -190,9 +200,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   initOpenStatus();
   initMenuRenderer();
   renderMealOffers();
+  renderEventSlider();
   initBookingModal();
   initLightbox();
-  initEventSlider();
   initAdminModule();
   initSmoothScroll();
 
@@ -269,11 +279,19 @@ function loadLocalData() {
     } else {
       AppState.mealOffers = [...DEFAULT_MEAL_OFFERS];
     }
+
+    const savedSlides = localStorage.getItem('saperavi_slider_photos');
+    if (savedSlides) {
+      AppState.sliderPhotos = JSON.parse(savedSlides);
+    } else {
+      AppState.sliderPhotos = [...DEFAULT_SLIDER_PHOTOS];
+    }
   } catch (e) {
     console.error('Ошибка загрузки локальных данных:', e);
     AppState.menu = [...DEFAULT_MENU_DATA];
     AppState.lunch = { ...DEFAULT_LUNCH_INFO };
     AppState.mealOffers = [...DEFAULT_MEAL_OFFERS];
+    AppState.sliderPhotos = [...DEFAULT_SLIDER_PHOTOS];
   }
 }
 
@@ -281,6 +299,7 @@ async function saveData() {
   try {
     localStorage.setItem('saperavi_menu_data', JSON.stringify(AppState.menu));
     localStorage.setItem('saperavi_meal_offers', JSON.stringify(AppState.mealOffers));
+    localStorage.setItem('saperavi_slider_photos', JSON.stringify(AppState.sliderPhotos));
     localStorage.setItem('saperavi_lunch_info', JSON.stringify(AppState.lunch));
     localStorage.setItem('saperavi_cloud_config', JSON.stringify(AppState.cloudConfig));
 
@@ -314,7 +333,6 @@ async function syncFromCloudRedis() {
         }
 
         if (Array.isArray(cloudData)) {
-          
           AppState.menu = cloudData.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad' && item.id !== 'pork-loin');
         } else if (cloudData && Array.isArray(cloudData.menu)) {
           AppState.menu = cloudData.menu.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad' && item.id !== 'pork-loin');
@@ -322,6 +340,11 @@ async function syncFromCloudRedis() {
             AppState.mealOffers = cloudData.mealOffers;
             localStorage.setItem('saperavi_meal_offers', JSON.stringify(AppState.mealOffers));
             renderMealOffers();
+          }
+          if (Array.isArray(cloudData.sliderPhotos)) {
+            AppState.sliderPhotos = cloudData.sliderPhotos;
+            localStorage.setItem('saperavi_slider_photos', JSON.stringify(AppState.sliderPhotos));
+            renderEventSlider();
           }
         }
 
@@ -341,6 +364,7 @@ async function saveToCloudRedis() {
     const bundle = {
       menu: AppState.menu,
       mealOffers: AppState.mealOffers,
+      sliderPhotos: AppState.sliderPhotos,
       lunch: AppState.lunch
     };
     const url = `${AppState.cloudConfig.restUrl.replace(/\/$/, '')}/set/saperavi_menu_data`;
@@ -901,23 +925,44 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
+let autoSlideTimer = null;
+
+function renderEventSlider() {
+  const slider = document.getElementById('events-slider');
+  if (!slider) return;
+
+  const slides = AppState.sliderPhotos && AppState.sliderPhotos.length > 0 
+    ? AppState.sliderPhotos 
+    : DEFAULT_SLIDER_PHOTOS;
+
+  slider.innerHTML = slides.map((slide, idx) => `
+    <div class="events-slide ${idx === 0 ? 'active' : ''}">
+      <div class="slide-blur-bg" style="background-image: url('${slide.image}');"></div>
+      <img src="${slide.image}" alt="${escapeHtml(slide.caption || 'Банкетное застолье и торжество')}" class="slide-main-img" onerror="this.src='assets/images/gallery-events-toasts.jpg'">
+    </div>
+  `).join('');
+
+  initEventSlider();
+}
+
 function initEventSlider() {
   const slider = document.getElementById('events-slider');
   const prevBtn = document.getElementById('slider-prev-btn');
   const nextBtn = document.getElementById('slider-next-btn');
   const dotsContainer = document.getElementById('slider-dots-container');
-  if (!slider) return;
+  if (!slider || !dotsContainer) return;
+
+  if (autoSlideTimer) {
+    clearInterval(autoSlideTimer);
+    autoSlideTimer = null;
+  }
 
   const slides = slider.querySelectorAll('.events-slide');
   if (slides.length === 0) return;
 
   let currentIndex = 0;
-  let autoSlideTimer = null;
-
-  // Clear dots just in case
   dotsContainer.innerHTML = '';
 
-  // Create indicator dots
   slides.forEach((_, idx) => {
     const dot = document.createElement('div');
     dot.className = 'slider-dot' + (idx === 0 ? ' active' : '');
@@ -930,13 +975,13 @@ function initEventSlider() {
   function showSlide(index) {
     resetAutoSlide();
 
-    slides[currentIndex].classList.remove('active');
-    dots[currentIndex].classList.remove('active');
+    if (slides[currentIndex]) slides[currentIndex].classList.remove('active');
+    if (dots[currentIndex]) dots[currentIndex].classList.remove('active');
 
     currentIndex = (index + slides.length) % slides.length;
 
-    slides[currentIndex].classList.add('active');
-    dots[currentIndex].classList.add('active');
+    if (slides[currentIndex]) slides[currentIndex].classList.add('active');
+    if (dots[currentIndex]) dots[currentIndex].classList.add('active');
 
     startAutoSlide();
   }
@@ -950,7 +995,9 @@ function initEventSlider() {
   }
 
   function startAutoSlide() {
-    autoSlideTimer = setInterval(nextSlide, 5000); // Auto change every 5 seconds
+    if (slides.length > 1) {
+      autoSlideTimer = setInterval(nextSlide, 5000);
+    }
   }
 
   function resetAutoSlide() {
@@ -959,8 +1006,8 @@ function initEventSlider() {
     }
   }
 
-  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+  if (prevBtn) prevBtn.onclick = prevSlide;
+  if (nextBtn) nextBtn.onclick = nextSlide;
 
   startAutoSlide();
 }
