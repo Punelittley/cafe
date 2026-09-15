@@ -474,6 +474,9 @@
         <div id="admin-sync-pill" class="status-badge-live online" style="font-size: 0.78rem;">
           🟢 База данных подключена
         </div>
+        <button onclick="manualRefreshFromCloud()" class="btn-action-gold" style="padding: 6px 14px; font-size: 0.8rem; background: #1e3a8a; border-color: #3b82f6;" title="Загрузить свежие данные из базы">
+          🔄 Обновить
+        </button>
         <a href="index.html" target="_blank" class="admin-site-link">
           Открыть сайт ↗
         </a>
@@ -509,7 +512,10 @@
                 Редактируйте цены, описания и названия прямо в таблице. Изменения сохраняются автоматически.
               </p>
             </div>
-            <div style="display: flex; gap: 10px;">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button onclick="manualSaveAllDishes()" class="btn-action-gold" style="background: #15803d; border-color: #22c55e;">
+                💾 Сохранить меню
+              </button>
               <button onclick="addNewDishModal()" class="btn-action-gold">
                 + Добавить блюдо
               </button>
@@ -545,9 +551,14 @@
                 Редактируйте тексты, бейджики, фото/видео, добавляйте новые карточки или удаляйте ненужные.
               </p>
             </div>
-            <button onclick="openAddOfferModal()" class="btn-action-gold">
-              + Добавить спецпредложение
-            </button>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button onclick="manualSaveAllOffers()" class="btn-action-gold" style="background: #15803d; border-color: #22c55e;">
+                💾 Сохранить предложения
+              </button>
+              <button onclick="openAddOfferModal()" class="btn-action-gold">
+                + Добавить спецпредложение
+              </button>
+            </div>
           </div>
 
           <div id="admin-offers-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
@@ -565,9 +576,14 @@
                 Загружайте новые фотографии с телефона или ПК, меняйте порядок отображения или удаляйте фото из слайдера.
               </p>
             </div>
-            <button onclick="openAddSlideModal()" class="btn-action-gold">
-              + Добавить фото в слайдер
-            </button>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button onclick="manualSaveAllSlides()" class="btn-action-gold" style="background: #15803d; border-color: #22c55e;">
+                💾 Сохранить слайдер
+              </button>
+              <button onclick="openAddSlideModal()" class="btn-action-gold">
+                + Добавить фото в слайдер
+              </button>
+            </div>
           </div>
 
           <div id="admin-slides-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
@@ -910,7 +926,7 @@
     </div>
   </div>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=20260915_v3"></script>
   <script>
     const AUTH_PASS = 'saperavi2024';
 
@@ -1035,6 +1051,54 @@
       renderAdminOffersGrid();
       renderAdminSlidesGrid();
       setSyncStatus(synced ? 'online' : 'local');
+    }
+
+    async function manualRefreshFromCloud() {
+      setSyncStatus('syncing');
+      showAdminToast('🔄 Загрузка актуальных данных из базы...');
+      const synced = await syncFromCloudRedis();
+      renderDishesTable();
+      renderAdminOffersGrid();
+      renderAdminSlidesGrid();
+      setSyncStatus(synced ? 'online' : 'local');
+      if (synced) {
+        showAdminToast('✅ Данные успешно обновлены из базы!');
+      } else {
+        showAdminToast('⚠️ Не удалось связаться с базой Redis. Проверьте сеть.', 'error');
+      }
+    }
+
+    async function manualSaveAllDishes() {
+      showAdminToast('⏳ Сохранение меню блюд в облако...');
+      const ok = await saveData();
+      renderDishesTable();
+      if (ok) {
+        showAdminToast('✅ Все блюда и изменения успешно сохранены в облаке!');
+      } else {
+        showAdminToast('⚠️ Ошибка соединения с базой Redis.', 'error');
+      }
+    }
+
+    async function manualSaveAllOffers() {
+      showAdminToast('⏳ Сохранение предложений в облако...');
+      const ok = await saveData();
+      renderAdminOffersGrid();
+      if (ok) {
+        showAdminToast('✅ Все ланчи и завтраки сохранены в облаке!');
+      } else {
+        showAdminToast('⚠️ Ошибка соединения с базой Redis.', 'error');
+      }
+    }
+
+    async function manualSaveAllSlides() {
+      showAdminToast('⏳ Сохранение слайдера в облако...');
+      const ok = await saveData();
+      renderAdminSlidesGrid();
+      if (ok) {
+        showAdminToast('✅ Фотографии слайдера успешно сохранены в облаке!');
+      } else {
+        showAdminToast('⚠️ Ошибка соединения с базой Redis.', 'error');
+      }
     }
 
     function logoutAdmin() {
@@ -1738,53 +1802,29 @@
       document.getElementById('photo-modal-preview-img').src = currentEditingPhotoUrl || 'assets/images/brand-card.jpg';
     }
 
-    function onPhotoFileSelected(e) {
+    async function onPhotoFileSelected(e) {
       const file = e.target.files[0];
       if (!file) return;
 
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          let width = img.width;
-          let height = img.height;
-          const MAX_SIZE = 800;
-
-          if (width > height) {
-            if (width > MAX_SIZE) {
-              height *= MAX_SIZE / width;
-              width = MAX_SIZE;
-            }
-          } else {
-            if (height > MAX_SIZE) {
-              width *= MAX_SIZE / height;
-              height = MAX_SIZE;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-
-          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
-          currentEditingPhotoUrl = compressedDataUrl;
-          document.getElementById('photo-modal-preview-img').src = compressedDataUrl;
-          document.getElementById('photo-modal-url-field').value = '(Загружено с устройства)';
-        };
-        img.src = evt.target.result;
-      };
-      reader.readAsDataURL(file);
+      try {
+        const compressed = await compressImageFile(file, 900, 0.75);
+        currentEditingPhotoUrl = compressed;
+        document.getElementById('photo-modal-preview-img').src = compressed;
+        document.getElementById('photo-modal-url-field').value = '(Загружено с устройства)';
+      } catch (err) {
+        showAdminToast('Ошибка обработки фото: ' + err.message, 'error');
+      }
       e.target.value = '';
     }
 
-    function applyPhotoModalChange() {
+    async function applyPhotoModalChange() {
       if (currentEditingPhotoDishIdx !== null && AppState.menu[currentEditingPhotoDishIdx]) {
         AppState.menu[currentEditingPhotoDishIdx].image = currentEditingPhotoUrl;
-        saveData();
+        showAdminToast('⏳ Сохранение фото блюда...');
+        const ok = await saveData();
         renderDishesTable();
         closePhotoChangeModal();
+        if (ok) showAdminToast('✅ Фото блюда успешно обновлено и сохранено!');
       }
     }
   </script>

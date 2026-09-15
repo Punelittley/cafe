@@ -310,11 +310,13 @@ async function syncFromCloudRedis() {
   }
 
   try {
-    const url = `${AppState.cloudConfig.restUrl.replace(/\/$/, '')}/get/saperavi_menu_data`;
+    const url = `${AppState.cloudConfig.restUrl.replace(/\/$/, '')}/get/saperavi_menu_data?_t=${Date.now()}`;
     const res = await fetch(url, {
+      method: 'GET',
       headers: {
         Authorization: `Bearer ${AppState.cloudConfig.restToken}`
-      }
+      },
+      cache: 'no-store'
     });
 
     if (res.ok) {
