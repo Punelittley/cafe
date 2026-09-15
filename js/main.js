@@ -237,37 +237,26 @@ function initOpenStatus() {
 
 function loadLocalData() {
   try {
-    const MENU_VERSION = 'v24_trout_desc_update';
-
     const savedCloud = localStorage.getItem('saperavi_cloud_config');
     if (savedCloud) {
       AppState.cloudConfig = JSON.parse(savedCloud);
     } else {
       AppState.cloudConfig = { ...DEFAULT_CLOUD_CONFIG };
-      localStorage.setItem('saperavi_cloud_config', JSON.stringify(AppState.cloudConfig));
+      try {
+        localStorage.setItem('saperavi_cloud_config', JSON.stringify(AppState.cloudConfig));
+      } catch (e) {}
     }
 
-    const savedVersion = localStorage.getItem('saperavi_menu_version');
     const savedMenu = localStorage.getItem('saperavi_menu_data');
-
-    if (savedMenu && savedVersion === MENU_VERSION) {
+    if (savedMenu) {
       const parsed = JSON.parse(savedMenu);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        
         AppState.menu = parsed.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad' && item.id !== 'pork-loin');
       } else {
         AppState.menu = [...DEFAULT_MENU_DATA];
       }
     } else {
       AppState.menu = [...DEFAULT_MENU_DATA];
-      localStorage.setItem('saperavi_menu_data', JSON.stringify(AppState.menu));
-      localStorage.setItem('saperavi_menu_version', MENU_VERSION);
-      
-      setTimeout(() => {
-        if (AppState.cloudConfig && AppState.cloudConfig.enabled) {
-          saveToCloudRedis().then(() => console.log('Defaults synced to cloud after version bump'));
-        }
-      }, 500);
     }
 
     const savedLunch = localStorage.getItem('saperavi_lunch_info');
@@ -296,24 +285,28 @@ function loadLocalData() {
 }
 
 async function saveData() {
+  let localOk = false;
   try {
     localStorage.setItem('saperavi_menu_data', JSON.stringify(AppState.menu));
     localStorage.setItem('saperavi_meal_offers', JSON.stringify(AppState.mealOffers));
     localStorage.setItem('saperavi_slider_photos', JSON.stringify(AppState.sliderPhotos));
     localStorage.setItem('saperavi_lunch_info', JSON.stringify(AppState.lunch));
     localStorage.setItem('saperavi_cloud_config', JSON.stringify(AppState.cloudConfig));
-
-    if (AppState.cloudConfig.enabled && AppState.cloudConfig.restUrl && AppState.cloudConfig.restToken) {
-      await saveToCloudRedis();
-    }
+    localOk = true;
   } catch (e) {
-    console.error('Ошибка сохранения данных:', e);
+    console.warn('Предупреждение localStorage (сохранение будет выполнено в облако):', e);
   }
+
+  if (AppState.cloudConfig.enabled && AppState.cloudConfig.restUrl && AppState.cloudConfig.restToken) {
+    const cloudOk = await saveToCloudRedis();
+    return cloudOk || localOk;
+  }
+  return localOk;
 }
 
 async function syncFromCloudRedis() {
   if (!AppState.cloudConfig.enabled || !AppState.cloudConfig.restUrl || !AppState.cloudConfig.restToken) {
-    return;
+    return false;
   }
 
   try {
@@ -334,27 +327,39 @@ async function syncFromCloudRedis() {
 
         if (Array.isArray(cloudData)) {
           AppState.menu = cloudData.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad' && item.id !== 'pork-loin');
-        } else if (cloudData && Array.isArray(cloudData.menu)) {
-          AppState.menu = cloudData.menu.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad' && item.id !== 'pork-loin');
+        } else if (cloudData && typeof cloudData === 'object') {
+          if (Array.isArray(cloudData.menu)) {
+            AppState.menu = cloudData.menu.filter(item => item.id !== 'shashlik-pork' && item.id !== 'borsh-trad' && item.id !== 'pork-loin');
+          }
           if (Array.isArray(cloudData.mealOffers)) {
             AppState.mealOffers = cloudData.mealOffers;
-            localStorage.setItem('saperavi_meal_offers', JSON.stringify(AppState.mealOffers));
-            renderMealOffers();
           }
           if (Array.isArray(cloudData.sliderPhotos)) {
             AppState.sliderPhotos = cloudData.sliderPhotos;
-            localStorage.setItem('saperavi_slider_photos', JSON.stringify(AppState.sliderPhotos));
-            renderEventSlider();
+          }
+          if (cloudData.lunch) {
+            AppState.lunch = cloudData.lunch;
           }
         }
 
-        localStorage.setItem('saperavi_menu_data', JSON.stringify(AppState.menu));
+        try {
+          localStorage.setItem('saperavi_menu_data', JSON.stringify(AppState.menu));
+          localStorage.setItem('saperavi_meal_offers', JSON.stringify(AppState.mealOffers));
+          localStorage.setItem('saperavi_slider_photos', JSON.stringify(AppState.sliderPhotos));
+          localStorage.setItem('saperavi_lunch_info', JSON.stringify(AppState.lunch));
+        } catch (e) {}
+
+        if (typeof renderMealOffers === 'function') renderMealOffers();
+        if (typeof renderEventSlider === 'function') renderEventSlider();
         if (window.refreshMenuGrid) window.refreshMenuGrid();
+        if (typeof window.onCloudSynced === 'function') window.onCloudSynced();
+        return true;
       }
     }
   } catch (err) {
-    console.warn('Локальный режим (Redis не настроен):', err);
+    console.warn('Локальный режим (Redis):', err);
   }
+  return false;
 }
 
 async function saveToCloudRedis() {
